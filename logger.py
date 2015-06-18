@@ -1,0 +1,54 @@
+'''
+
+This class enables the software to log every action the users perform in the program. For now three distinctions are made, Info, warning or error
+messages.
+
+@author: Incalza Dario
+'''
+from datetime import datetime
+from PySide.QtGui import QColor
+from PySide import QtGui, QtCore
+
+
+class Logger(object):
+    INFO = 0x0
+    WARNING = 0x1
+    ERROR = 0x2
+
+    def __init__(self, console):
+        self.__console = console
+        self.__console.setTextBackgroundColor(QColor(0, 0, 0))
+
+    '''
+    Log a text to inform the user of a certain IO action. Given : the text that needs to be displayed. A timestamp will be printed before the text.
+    '''
+
+    def log(self, level, text):
+        if level == 0x0:
+            color = QColor(124, 252, 0)
+            prefix = ' - [Info]'
+        elif level == 0x1:
+            color = QColor(255, 140, 0)
+            prefix = ' - [Warning]'
+        else:
+            color = QColor(253, 0, 0)
+            prefix = ' - [Error]'
+        self.__console.setTextColor(color)
+        now = datetime.now()
+        time = str(now.strftime("%H:%M"))
+        self.__console.append(time + prefix + " >> " + text)
+        QtGui.QApplication.processEvents()
+
+    def clearLog(self):
+        self.__console.clear()
+        self.log(Logger.INFO, "### DroidSec - dev version 0.01 ###")
+
+    def saveLog(self):
+        filename = "droidsec_log_" + str(datetime.now().strftime("%d%m%y-%H%M"))
+        path = QtGui.QFileDialog.getSaveFileName(None, QtCore.QString('Open file'), QtCore.QString(filename), ".txt")
+        if path == '':
+            return
+        text_file = open(path, "w")
+        text_file.write(self.__console.toPlainText())
+        text_file.close()
+        self.log(Logger.INFO, "Log saved succesfully in " + path)
