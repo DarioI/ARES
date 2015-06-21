@@ -18,8 +18,10 @@
 __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 
 import sys
+
 from PyQt4 import QtGui
-from MainView import MainView
+
+from droidsec.core.MainView import MainView
 
 if __name__ == '__main__':
     sys.setrecursionlimit(50000)

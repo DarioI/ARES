@@ -18,10 +18,12 @@
 __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 
 from PySide import QtGui, QtCore
+
 from droidsec_ui import Ui_MainWindow
-from logger import Logger
+from droidsec.core.logger import Logger
 from androguard.misc import *
 from androguard.gui.apkloading import ApkLoadingThread
+
 
 class MainView(QtGui.QMainWindow):
 
