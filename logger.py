@@ -38,6 +38,8 @@ class Logger(object):
         now = datetime.now()
         time = str(now.strftime("%H:%M"))
         self.__console.append(time + prefix + " >> " + text)
+        sb = self.__console.verticalScrollBar()
+        sb.setValue(sb.maximum())
         QtGui.QApplication.processEvents()
 
     def log_with_color(self,level,text):
@@ -49,6 +51,8 @@ class Logger(object):
             color = QColor(253, 0, 0)
         self.__console.setTextColor(color)
         self.__console.append(text)
+        sb = self.__console.verticalScrollBar()
+        sb.setValue(sb.maximum())
         QtGui.QApplication.processEvents()
 
     def log_with_title(self,title, text):
@@ -62,6 +66,8 @@ class Logger(object):
         self.__console.append("==================================================================\n")
         self.__console.setTextColor(color)
         self.__console.append(text)
+        sb = self.__console.verticalScrollBar()
+        sb.setValue(sb.maximum())
         QtGui.QApplication.processEvents()
 
     def clearLog(self):
