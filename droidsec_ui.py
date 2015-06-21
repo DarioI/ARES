@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'droidsec.ui'
 #
-# Created: Thu Jun 18 11:44:08 2015
+# Created: Sun Jun 21 21:56:06 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -73,6 +73,23 @@ class Ui_MainWindow(object):
         self.saveLogBtn = QtGui.QPushButton(self.groupBox_2)
         self.saveLogBtn.setGeometry(QtCore.QRect(130, 290, 110, 32))
         self.saveLogBtn.setObjectName(_fromUtf8("saveLogBtn"))
+        self.groupBox_4 = QtGui.QGroupBox(self.tab_3)
+        self.groupBox_4.setGeometry(QtCore.QRect(530, 10, 681, 291))
+        self.groupBox_4.setObjectName(_fromUtf8("groupBox_4"))
+        self.appInfoTable = QtGui.QTableWidget(self.groupBox_4)
+        self.appInfoTable.setGeometry(QtCore.QRect(10, 30, 661, 251))
+        self.appInfoTable.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+        self.appInfoTable.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
+        self.appInfoTable.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.appInfoTable.setObjectName(_fromUtf8("appInfoTable"))
+        self.appInfoTable.setColumnCount(3)
+        self.appInfoTable.setRowCount(0)
+        item = QtGui.QTableWidgetItem()
+        self.appInfoTable.setHorizontalHeaderItem(0, item)
+        item = QtGui.QTableWidgetItem()
+        self.appInfoTable.setHorizontalHeaderItem(1, item)
+        item = QtGui.QTableWidgetItem()
+        self.appInfoTable.setHorizontalHeaderItem(2, item)
         self.tabWidget.addTab(self.tab_3, _fromUtf8(""))
         self.tab_4 = QtGui.QWidget()
         self.tab_4.setObjectName(_fromUtf8("tab_4"))
@@ -97,7 +114,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -110,6 +127,13 @@ class Ui_MainWindow(object):
         self.groupBox_2.setTitle(_translate("MainWindow", "Log", None))
         self.clearLogBtn.setText(_translate("MainWindow", "Clear", None))
         self.saveLogBtn.setText(_translate("MainWindow", "Save ...", None))
+        self.groupBox_4.setTitle(_translate("MainWindow", "Application Info", None))
+        item = self.appInfoTable.horizontalHeaderItem(0)
+        item.setText(_translate("MainWindow", "Application Variable", None))
+        item = self.appInfoTable.horizontalHeaderItem(1)
+        item.setText(_translate("MainWindow", "Value", None))
+        item = self.appInfoTable.horizontalHeaderItem(2)
+        item.setText(_translate("MainWindow", "Action", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "APK", None))
         self.groupBox.setTitle(_translate("MainWindow", "Sources", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "Sources", None))

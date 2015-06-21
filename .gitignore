@@ -1,0 +1,14 @@
+
+*.pyc
+
+*.iml
+
+.idea/.name
+
+.idea/modules.xml
+
+.idea/misc.xml
+
+.idea/vcs.xml
+
+.idea/workspace.xml
