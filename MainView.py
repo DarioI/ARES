@@ -1,5 +1,6 @@
 __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 
+from constants import *
 from PySide import QtGui, QtCore
 from droidsec_ui import Ui_MainWindow
 from logger import Logger
@@ -48,28 +49,33 @@ class MainView(QtGui.QMainWindow):
         self.info["Application Name"]            = self.apk.get_app_name()
         self.info["Android Version Name"]        = self.apk.get_androidversion_name()
         self.info["Android Version Code"]        = self.apk.get_androidversion_code()
+        self.info["Android Package Name"]        = self.apk.get_package()
         self.info["Uses Dynamic Code Loading"]   = str(is_dyn_code(self.x))
         self.info["Uses Reflection"]             = str(is_reflection_code(self.x))
         self.info["Uses Crypto"]                 = str(is_crypto_code(self.x))
         self.info["Number of Activities"]        = str(len(self.apk.get_activities()))
         self.info["Number of Libraries"]         = str(len(self.apk.get_libraries()))
+        self.info["Number of Permissions"]       = str(len(self.get_uses_permissions()))
 
         self.info_actions = {}
         self.info_actions["Application Name"]            = None
         self.info_actions["Android Version Name"]        = None
         self.info_actions["Android Version Code"]        = None
+        self.info_actions["Android Package Name"]        = None
         self.info_actions["Uses Dynamic Code Loading"]   = self.show_dyncode
         self.info_actions["Uses Reflection"]             = self.show_reflection
         self.info_actions["Uses Crypto"]                 = None
         self.info_actions["Number of Activities"]        = self.show_activities
         self.info_actions["Number of Libraries"]         = self.show_libraries
+        self.info_actions["Number of Permissions"]       = self.show_permissions
         info_table = self.ui.appInfoTable
         info_table.setRowCount(len(self.info))
-        info_table.horizontalHeader().setStretchLastSection(True)
+        info_table.setColumnWidth(1, 200)
+        info_table.horizontalHeader().setResizeMode(0, QtGui.QHeaderView.Stretch)
         row = 0
         for key in sorted(self.info):
             action = self.info_actions[key]
-            action_item = None
+            action_button = None
             if action is not None:
                 action_button = QtGui.QPushButton()
                 action_button.setText("Show")
@@ -78,21 +84,69 @@ class MainView(QtGui.QMainWindow):
             value_item = QtGui.QTableWidgetItem(self.info[key])
             info_table.setItem(row,0,key_item)
             info_table.setItem(row,1,value_item)
-            if action_item is not None:
-                info_table.setCellWidget(row,3,action_button)
+            if action_button is not None:
+                info_table.setCellWidget(row,2,action_button)
             row += 1
 
+    def show_permissions(self):
+        self.__logger.log(Logger.INFO,"Searching for permission usage, this can take a while depending on the size of the app.")
+        p = self.x.get_permissions( [] )
+        str_perms=""
+        self.__logger.log_with_title("Permissions Usage","")
+        for i in p:
+            self.__logger.log_with_color(Logger.WARNING,"\n\t======="+i+"=======\n")
+            for j in p[i]:
+                self.__logger.log_with_color(Logger.INFO,"\t\t -"+self.show_Path(self.x.get_vm(), j )+"\n")
+
+
     def show_dyncode(self):
-        self.__logger.log(Logger.INFO,"Dynamic Code Usage:"+show_DynCode(self.x))
+        if is_dyn_code(self.x) is False:
+            self.__logger.log(Logger.WARNING,"No dynamic code was found!")
+            return
+
+        paths = []
+        paths.extend(self.x.get_tainted_packages().search_methods("Ldalvik/system/BaseDexClassLoader;",
+                                                    "<init>",
+                                                    "."))
+
+        paths.extend(self.x.get_tainted_packages().search_methods("Ldalvik/system/PathClassLoader;",
+                                                    "<init>",
+                                                    "."))
+
+        paths.extend(self.x.get_tainted_packages().search_methods("Ldalvik/system/DexClassLoader;",
+                                                    "<init>",
+                                                    "."))
+
+        paths.extend(self.x.get_tainted_packages().search_methods("Ldalvik/system/DexFile;",
+                                                    "<init>",
+                                                    "."))
+
+        paths.extend(self.x.get_tainted_packages().search_methods("Ldalvik/system/DexFile;",
+                                                    "loadDex",
+                                                    "."))
+        str_info_dyn="\t"
+        for path in paths:
+            str_info_dyn += (self.show_Path(self.x.get_vm(), path )+"\n\n\t")
+        self.__logger.log_with_title("Usage of Dynamic Code",str_info_dyn)
 
     def show_reflection(self):
-        self.__logger.log(Logger.INFO,"Dynamic Code Usage:"+show_DynCode(self.x))
+        if is_reflection_code(self.x) is False:
+            self.__logger.log(Logger.WARNING,"No reflection code was found!")
+            return
+        paths = self.x.get_tainted_packages().search_methods("Ljava/lang/reflect/Method;", ".", ".")
+        str_info_reflection=""
+        for path in paths:
+            str_info_reflection += (self.show_Path(self.x.get_vm(), path )+"\n\n\t")
+        self.__logger.log_with_title("Usage of Reflection",str_info_reflection)
 
     def show_activities(self):
-        self.__logger.log(Logger.INFO,"Dynamic Code Usage:"+show_DynCode(self.x))
+        self.__logger.log_with_title("Activities",'\n\t -'+'\n\t -'.join(self.apk.get_activities()))
 
     def show_libraries(self):
-        self.__logger.log(Logger.INFO,"Libraries Used: "+self.apk.get_libraries())
+        if len(self.apk.get_libraries()) == 0:
+            self.__logger.log(Logger.WARNING,"No libraries were found.")
+            return
+        self.__logger.log(Logger.INFO,"Libraries Used: "+str(self.apk.get_libraries()))
 
     def init_actions(self):
         self.ui.chooseAPKBtn.clicked.connect(self.load_apk)
@@ -136,6 +190,40 @@ class MainView(QtGui.QMainWindow):
         self.dialog.setModal(True)
         self.dialog.show()
 
-
     def set_loading_progressbar_disabled(self):
         self.dialog.hide()
+
+    def show_Path(self,vm, path):
+      cm = vm.get_class_manager()
+
+      if isinstance(path, PathVar):
+        dst_class_name, dst_method_name, dst_descriptor =  path.get_dst( cm )
+        info_var = path.get_var_info()
+        return  "%s %s (0x%x) ---> %s->%s%s " % (path.get_access_flag(),
+                                              info_var,
+                                              path.get_idx(),
+                                              dst_class_name,
+                                              dst_method_name,
+                                              dst_descriptor)
+      else:
+        if path.get_access_flag() == TAINTED_PACKAGE_CALL:
+          src_class_name, src_method_name, src_descriptor =  path.get_src( cm )
+          dst_class_name, dst_method_name, dst_descriptor =  path.get_dst( cm )
+
+          return "%d %s->%s%s (0x%x) ---> %s->%s%s" % (path.get_access_flag(),
+                                                      src_class_name,
+                                                      src_method_name,
+                                                      src_descriptor,
+                                                      path.get_idx(),
+                                                      dst_class_name,
+                                                      dst_method_name,
+                                                      dst_descriptor)
+        else:
+          src_class_name, src_method_name, src_descriptor =  path.get_src( cm )
+          return "%d %s->%s%s (0x%x)" % (path.get_access_flag(),
+                                        src_class_name,
+                                        src_method_name,
+                                        src_descriptor,
+                                        path.get_idx())
+
+

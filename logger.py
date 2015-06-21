@@ -11,9 +11,10 @@ from PySide import QtGui, QtCore
 
 
 class Logger(object):
-    INFO = 0x0
-    WARNING = 0x1
-    ERROR = 0x2
+    INFO        = 0x0
+    WARNING     = 0x1
+    ERROR       = 0x2
+    MAGENTA     = 0x3
 
     def __init__(self, console):
         self.__console = console
@@ -39,16 +40,41 @@ class Logger(object):
         self.__console.append(time + prefix + " >> " + text)
         QtGui.QApplication.processEvents()
 
+    def log_with_color(self,level,text):
+        if level == 0x0:
+            color = QColor(124, 252, 0)
+        elif level == 0x1:
+            color = QColor(255, 140, 0)
+        else:
+            color = QColor(253, 0, 0)
+        self.__console.setTextColor(color)
+        self.__console.append(text)
+        QtGui.QApplication.processEvents()
+
+    def log_with_title(self,title, text):
+
+        color   = QColor(124, 252, 0)
+        magenta = QColor(255,0,255)
+        self.__console.setTextColor(magenta)
+
+        self.__console.append("\n==================================================================\n")
+        self.__console.append("\t\t"+title+"\n")
+        self.__console.append("==================================================================\n")
+        self.__console.setTextColor(color)
+        self.__console.append(text)
+        QtGui.QApplication.processEvents()
+
     def clearLog(self):
         self.__console.clear()
         self.log(Logger.INFO, "### DroidSec - dev version 0.01 ###")
 
     def saveLog(self):
         filename = "droidsec_log_" + str(datetime.now().strftime("%d%m%y-%H%M"))
-        path = QtGui.QFileDialog.getSaveFileName(None, QtCore.QString('Open file'), QtCore.QString(filename), ".txt")
+        path = QtGui.QFileDialog.getSaveFileName(None, "Open file", filename, ".txt")
         if path == '':
             return
-        text_file = open(path, "w")
+        path_str = ''.join(path)
+        text_file = open(path_str, "w")
         text_file.write(self.__console.toPlainText())
         text_file.close()
-        self.log(Logger.INFO, "Log saved succesfully in " + path)
+        self.log(Logger.INFO, "Log saved succesfully in " + path_str)

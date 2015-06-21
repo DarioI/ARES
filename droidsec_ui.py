@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'droidsec.ui'
 #
-# Created: Sun Jun 21 21:56:06 2015
+# Created: Sun Jun 21 22:22:15 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -59,11 +59,11 @@ class Ui_MainWindow(object):
         item = QtGui.QTableWidgetItem()
         self.permsTable.setHorizontalHeaderItem(0, item)
         self.groupBox_2 = QtGui.QGroupBox(self.tab_3)
-        self.groupBox_2.setGeometry(QtCore.QRect(20, 300, 501, 321))
+        self.groupBox_2.setGeometry(QtCore.QRect(20, 300, 1191, 321))
         self.groupBox_2.setObjectName(_fromUtf8("groupBox_2"))
         self.logArea = QtGui.QTextBrowser(self.groupBox_2)
         self.logArea.setEnabled(True)
-        self.logArea.setGeometry(QtCore.QRect(10, 30, 481, 251))
+        self.logArea.setGeometry(QtCore.QRect(10, 30, 1171, 261))
         self.logArea.setAutoFillBackground(False)
         self.logArea.setStyleSheet(_fromUtf8("background-color:black;"))
         self.logArea.setObjectName(_fromUtf8("logArea"))
