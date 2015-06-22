@@ -21,7 +21,7 @@ import sys
 
 from PySide import QtGui
 
-from MainView import MainView
+from droidsec.core.MainView import MainView
 
 if __name__ == '__main__':
     sys.setrecursionlimit(50000)
