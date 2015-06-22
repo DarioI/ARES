@@ -17,10 +17,11 @@
 
 __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 
+from PySide import QtGui, QtCore
+
 from dumpey import dumpey
 import util
 from droidsec.ui.ui_utils import CustomTabBar
-from PySide import QtGui, QtCore
 from droidsec.ui.droidsec_ui import Ui_MainWindow
 from logger import Logger
 from androguard.misc import *
@@ -28,6 +29,7 @@ from androguard.gui.apkloading import ApkLoadingThread
 from androguard.gui.treewindow import TreeWindow
 from androguard.gui.sourcewindow import SourceWindow
 from droidsec.ui.devicetable import DeviceTable
+
 
 class MainView(QtGui.QMainWindow):
 

@@ -17,9 +17,11 @@
 
 __author__ = 'Dario Incalza'
 
-from PySide import QtGui, QtCore
-from devicewindow_ui import Ui_Dialog
 import os
+
+from PySide import QtGui, QtCore
+
+from devicewindow_ui import Ui_Dialog
 from droidsec.core.logger import Logger
 from dumpey import dumpey
 
