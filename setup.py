@@ -6,6 +6,6 @@ setup(
     name = 'droidsec',
     version = '1.alpha',
     packages = find_packages(),
-    scripts = ['core.py'],
+    scripts = ['droidsec.py'],
     install_requires=['distribute'],
 )
