@@ -13,7 +13,6 @@ The sole purpose of this tool is for educational and security research purposes 
 - Show usage of permissions
 
 ##Roadmap
-- Decompilation and browsing through .java sources
 - Instrument APKs
 - Sign instrumented APKs
 
