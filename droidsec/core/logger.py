@@ -22,6 +22,7 @@ messages.
 
 @author: Incalza Dario
 '''
+
 from datetime import datetime
 from PySide.QtGui import QColor
 from PySide import QtGui, QtCore
@@ -59,7 +60,7 @@ class Logger(object):
         sb.setValue(sb.maximum())
         QtGui.QApplication.processEvents()
 
-    def log_with_color(self,level,text):
+    def log_with_color(self, level, text):
         if level == 0x0:
             color = QColor(124, 252, 0)
         elif level == 0x1:
@@ -72,10 +73,10 @@ class Logger(object):
         sb.setValue(sb.maximum())
         QtGui.QApplication.processEvents()
 
-    def log_with_title(self,title, text):
+    def log_with_title(self, title, text):
 
-        color   = QColor(124, 252, 0)
-        magenta = QColor(255,0,255)
+        color = QColor(124, 252, 0)
+        magenta = QColor(255, 0, 255)
         self.__console.setTextColor(magenta)
 
         self.__console.append("\n==================================================================\n")
@@ -88,10 +89,12 @@ class Logger(object):
         QtGui.QApplication.processEvents()
 
     def clearLog(self):
+
         self.__console.clear()
         self.log(Logger.INFO, "### DroidSec - dev version 0.01 ###")
 
     def saveLog(self):
+
         filename = "droidsec_log_" + str(datetime.now().strftime("%d%m%y-%H%M"))
         path = QtGui.QFileDialog.getSaveFileName(None, "Open file", filename, ".txt")
         if path == '':

@@ -22,7 +22,7 @@ import util
 from droidsec.ui.ui_utils import CustomTabBar
 from PySide import QtGui, QtCore
 from droidsec.ui.droidsec_ui import Ui_MainWindow
-from droidsec.core.logger import Logger
+from logger import Logger
 from androguard.misc import *
 from androguard.gui.apkloading import ApkLoadingThread
 from androguard.gui.treewindow import TreeWindow
