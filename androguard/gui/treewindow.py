@@ -6,8 +6,6 @@ from androguard.gui.sourcewindow import SourceWindow
 from androguard.gui.helpers import classdot2class, Signature
 
 class TreeWindow(QtGui.QTreeWidget):
-    '''TODO
-    '''
 
     def __init__(self, parent=None, win=None):
 
@@ -36,6 +34,7 @@ class TreeWindow(QtGui.QTreeWidget):
             path_node[0][path] = ({},
                     QtGui.QTreeWidgetItem(path_node[1]))
             path_node[0][path][1].setText(0, sig.class_name)
+
 
     def item2path(self, item, column=0):
         '''Browse all parents from QTreeWidgetItem item

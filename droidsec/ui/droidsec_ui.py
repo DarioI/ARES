@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'droidsec.ui'
 #
-# Created: Mon Jun 22 15:00:27 2015
+# Created: Mon Jun 22 17:31:28 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -96,10 +96,9 @@ class Ui_MainWindow(object):
         self.groupBox = QtGui.QGroupBox(self.tab_4)
         self.groupBox.setGeometry(QtCore.QRect(10, 0, 281, 621))
         self.groupBox.setObjectName(_fromUtf8("groupBox"))
-        self.treeWidget = QtGui.QTreeWidget(self.groupBox)
-        self.treeWidget.setGeometry(QtCore.QRect(10, 30, 256, 581))
-        self.treeWidget.setObjectName(_fromUtf8("treeWidget"))
-        self.treeWidget.headerItem().setText(0, _fromUtf8("1"))
+        self.tree_area = QtGui.QWidget(self.groupBox)
+        self.tree_area.setGeometry(QtCore.QRect(10, 30, 251, 581))
+        self.tree_area.setObjectName(_fromUtf8("tree_area"))
         self.sourceTextWidget = QtGui.QWidget(self.tab_4)
         self.sourceTextWidget.setGeometry(QtCore.QRect(300, 10, 911, 621))
         self.sourceTextWidget.setObjectName(_fromUtf8("sourceTextWidget"))
@@ -117,7 +116,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

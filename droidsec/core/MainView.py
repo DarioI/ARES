@@ -24,7 +24,7 @@ from droidsec.ui.droidsec_ui import Ui_MainWindow
 from droidsec.core.logger import Logger
 from androguard.misc import *
 from androguard.gui.apkloading import ApkLoadingThread
-from sourcetreecontroller import TreeWindow
+from androguard.gui.treewindow import TreeWindow
 from droidsec.ui.devicetable import DeviceTable
 
 class MainView(QtGui.QMainWindow):
@@ -59,13 +59,20 @@ class MainView(QtGui.QMainWindow):
         self.d = self.apkLoadingThread.d
         self.x = self.apkLoadingThread.x
 
-        self.sourcetreecontroller = TreeWindow(self,self.ui.treeWidget)
-        self.sourcetreecontroller.fill(self.d.get_classes())
+        self.setupTree(self.d.get_classes())
         self.load_app_info_table()
         self.load_permissions()
         self.__logger.log(Logger.INFO,"Analysis of %s done!" % str(self.apk.get_app_name()))
         self.ui.loadedAPK_label.setText("Loaded: "+str(self.apk.get_app_name()))
         self.set_loading_progressbar_disabled()
+
+    def setupTree(self,classes):
+        self.tree = TreeWindow(self)
+        self.tree.setWindowTitle("Tree model")
+        layout = QtGui.QVBoxLayout()
+        layout.addWidget(self.tree)
+        self.ui.tree_area.setLayout(layout)
+        self.tree.fill(classes)
 
     def load_app_info_table(self):
         self.info = {}
