@@ -14,7 +14,6 @@ ipython==3.1.0
 itsdangerous==0.24
 Jinja2==2.7.3
 jsonschema==2.4.0
-libxml2-python==2.9.1
 MarkupSafe==0.23
 mercurial==3.3
 mistune==0.5.1
