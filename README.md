@@ -11,6 +11,7 @@ The sole purpose of this tool is for educational and security research purposes 
 - Show usage of dynamic code update
 - Show usage of crypto code
 - Show usage of permissions
+- Decompilation and browsing through .java sources (integration of the Androguard Gui app)
 
 ##Roadmap
 - Instrument APKs
