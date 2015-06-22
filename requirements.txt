@@ -38,7 +38,3 @@ Sphinx==1.3.1
 sphinx-rtd-theme==0.1.8
 terminado==0.5
 tornado==4.1
-vboxapi==1.0
-volatility==2.4
-Werkzeug==0.9.6
-Whoosh==2.5.5
