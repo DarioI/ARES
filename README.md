@@ -1,6 +1,12 @@
 # DroidSec
 DroidSec is a security suite for analyzing Android .apk files. Core analysis technology is based on the awesome Androguard codebase.
 
+##Dependencies
+- pip
+- dumpey
+- PySide
+
+
 ##License
 ###DroidSec
 Copyright (C) 2015, Dario Incalza <dario.incalza@gmail.com>
