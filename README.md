@@ -3,6 +3,7 @@ DroidSec is a security suite for analyzing Android .apk files. Core analysis tec
 
 The sole purpose of this tool is for educational and security research purposes only. Use it on your own responsibility. 
 ## How to run
+- Make sure Python 2.7 is installed and on your path
 - Install [pip](https://pip.pypa.io/en/latest/installing.html)
 - Download DroidSec and install requirements, run in a terminal: 
 ```
