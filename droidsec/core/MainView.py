@@ -17,14 +17,15 @@
 
 __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 
+from dumpey import dumpey
+import util
 from PySide import QtGui, QtCore
-
-from droidsec_ui import Ui_MainWindow
+from droidsec.ui.droidsec_ui import Ui_MainWindow
 from droidsec.core.logger import Logger
 from androguard.misc import *
 from androguard.gui.apkloading import ApkLoadingThread
 from sourcetreecontroller import TreeWindow
-import dumpey
+from droidsec.ui.devicetable import DeviceTable
 
 class MainView(QtGui.QMainWindow):
 
@@ -41,6 +42,8 @@ class MainView(QtGui.QMainWindow):
         self.x = self.d = self.a = None
         self.manifest = None
 
+    def get_logger(self):
+        return self.__logger;
 
     def setupApkLoading(self):
         self.apkLoadingThread = ApkLoadingThread()
@@ -48,7 +51,8 @@ class MainView(QtGui.QMainWindow):
 
     def loadedApk(self, success):
         if not success:
-            Logger.log(Logger.ERROR,"Analysis of %s failed :(" % str(self.apkLoadingThread.apk_path))
+            self.__logger.log(Logger.ERROR,"Analysis of %s failed :(" % str(self.apkLoadingThread.apk_path))
+            self.set_loading_progressbar_disabled()
             return
 
         self.a = self.apkLoadingThread.a
@@ -60,11 +64,13 @@ class MainView(QtGui.QMainWindow):
         self.load_app_info_table()
         self.load_permissions()
         self.__logger.log(Logger.INFO,"Analysis of %s done!" % str(self.apk.get_app_name()))
+        self.ui.loadedAPK_label.setText("Loaded: "+str(self.apk.get_app_name()))
         self.set_loading_progressbar_disabled()
 
     def load_app_info_table(self):
         self.info = {}
         self.info["Application Name"]            = self.apk.get_app_name()
+        self.info["Application Size"]            = util.sizeof_fmt(os.path.getsize(self.apk_path))
         self.info["Android Version Name"]        = self.apk.get_androidversion_name()
         self.info["Android Version Code"]        = self.apk.get_androidversion_code()
         self.info["Android Package Name"]        = self.apk.get_package()
@@ -77,12 +83,13 @@ class MainView(QtGui.QMainWindow):
 
         self.info_actions = {}
         self.info_actions["Application Name"]            = None
+        self.info_actions["Application Size"]            = None
         self.info_actions["Android Version Name"]        = None
         self.info_actions["Android Version Code"]        = None
         self.info_actions["Android Package Name"]        = None
         self.info_actions["Uses Dynamic Code Loading"]   = self.show_dyncode
         self.info_actions["Uses Reflection"]             = self.show_reflection
-        self.info_actions["Uses Crypto"]                 = None
+        self.info_actions["Uses Crypto"]                 = self.show_cryptocode
         self.info_actions["Number of Activities"]        = self.show_activities
         self.info_actions["Number of Libraries"]         = self.show_libraries
         self.info_actions["Number of Permissions"]       = self.show_permissions
@@ -116,6 +123,25 @@ class MainView(QtGui.QMainWindow):
             for j in p[i]:
                 self.__logger.log_with_color(Logger.INFO,"\t\t -"+self.show_Path(self.x.get_vm(), j )+"\n")
 
+    def show_cryptocode(self):
+        if is_crypto_code(self.x) is False:
+            self.__logger.log(Logger.WARNING,"No crypto code was found!")
+            return
+
+        paths = []
+
+        paths.extend(self.x.get_tainted_packages().search_methods("Ljavax/crypto/.",
+                                                ".",
+                                                "."))
+
+        paths.extend(self.x.get_tainted_packages().search_methods("Ljava/security/spec/.",
+                                                    ".",
+                                                    "."))
+
+        str_info_dyn="\t"
+        for path in paths:
+            str_info_dyn += (self.show_Path(self.x.get_vm(), path )+"\n\n\t")
+        self.__logger.log_with_title("Usage of Crypto Code",str_info_dyn)
 
     def show_dyncode(self):
         if is_dyn_code(self.x) is False:
@@ -167,20 +193,28 @@ class MainView(QtGui.QMainWindow):
         self.__logger.log(Logger.INFO,"Libraries Used: "+str(self.apk.get_libraries()))
 
     def init_actions(self):
+
         self.ui.chooseAPKBtn.clicked.connect(self.load_apk)
+        self.ui.btnFromDevice.clicked.connect(self.load_apk_from_device)
         self.ui.saveLogBtn.clicked.connect(self.__logger.saveLog)
         self.ui.clearLogBtn.clicked.connect(self.__logger.clearLog)
-        self.ui.btnFromDevice.clicked.connect(self.load_apk_from_device)
 
     def load_apk_from_device(self):
-        print dumpey.attached_devices()
+        try:
+            dumpey.attached_devices()
+        except Exception:
+            self.__logger.log(Logger.ERROR,"No device has been detected. Are you sure an Android device is connected?"+
+                                           " Make sure adb is on your path.")
+            return
+        table = DeviceTable(self)
+        table.exec_()
 
     def load_apk(self,path=None):
         if not path:
             path = QtGui.QFileDialog.getOpenFileName(self, "Open File",
                     '', "APK Files (*.apk);;Androguard Session (*.ag)")
             path = str(path[0])
-
+        self.apk_path = path
         if path:
             self.set_loading_progressbar("Analyzing APK","Please wait while the APK is being dissected")
             self.__logger.log(Logger.INFO,"Analyzing %s..." % str(path))
