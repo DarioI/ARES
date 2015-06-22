@@ -173,7 +173,7 @@ class MainView(QtGui.QMainWindow):
         self.ui.btnFromDevice.clicked.connect(self.load_apk_from_device)
 
     def load_apk_from_device(self):
-        
+        print dumpey.attached_devices()
 
     def load_apk(self,path=None):
         if not path:
