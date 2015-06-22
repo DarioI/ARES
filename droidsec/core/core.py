@@ -19,7 +19,7 @@ __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 
 import sys
 
-from PyQt4 import QtGui
+from PySide import QtGui
 
 from droidsec.core.MainView import MainView
 
