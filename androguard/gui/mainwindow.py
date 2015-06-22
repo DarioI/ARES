@@ -148,6 +148,7 @@ class MainWindow(QtGui.QMainWindow):
         self.central.currentChanged.connect(self.currentTabChanged)
         self.setCentralWidget(self.central)
 
+
     def tabCloseRequestedHandler(self, index):
         self.central.removeTab(index)
 

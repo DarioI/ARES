@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'droidsec.ui'
 #
-# Created: Mon Jun 22 17:31:28 2015
+# Created: Mon Jun 22 17:46:18 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -100,7 +100,7 @@ class Ui_MainWindow(object):
         self.tree_area.setGeometry(QtCore.QRect(10, 30, 251, 581))
         self.tree_area.setObjectName(_fromUtf8("tree_area"))
         self.sourceTextWidget = QtGui.QWidget(self.tab_4)
-        self.sourceTextWidget.setGeometry(QtCore.QRect(300, 10, 911, 621))
+        self.sourceTextWidget.setGeometry(QtCore.QRect(300, 0, 911, 621))
         self.sourceTextWidget.setObjectName(_fromUtf8("sourceTextWidget"))
         self.tabWidget.addTab(self.tab_4, _fromUtf8(""))
         self.btnFromDevice = QtGui.QPushButton(self.centralwidget)

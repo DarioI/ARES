@@ -19,12 +19,14 @@ __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 
 from dumpey import dumpey
 import util
+from droidsec.ui.ui_utils import CustomTabBar
 from PySide import QtGui, QtCore
 from droidsec.ui.droidsec_ui import Ui_MainWindow
 from droidsec.core.logger import Logger
 from androguard.misc import *
 from androguard.gui.apkloading import ApkLoadingThread
 from androguard.gui.treewindow import TreeWindow
+from androguard.gui.sourcewindow import SourceWindow
 from droidsec.ui.devicetable import DeviceTable
 
 class MainView(QtGui.QMainWindow):
@@ -67,12 +69,52 @@ class MainView(QtGui.QMainWindow):
         self.set_loading_progressbar_disabled()
 
     def setupTree(self,classes):
-        self.tree = TreeWindow(self)
+        self.tree = TreeWindow(self,self)
         self.tree.setWindowTitle("Tree model")
         layout = QtGui.QVBoxLayout()
         layout.addWidget(self.tree)
         self.ui.tree_area.setLayout(layout)
         self.tree.fill(classes)
+        self.setupCentral()
+
+    def setupCentral(self):
+        self.central = QtGui.QTabWidget()
+        self.central.setTabBar(CustomTabBar())
+        self.central.setTabsClosable(True)
+        self.central.tabCloseRequested.connect(self.tabCloseRequestedHandler)
+        self.central.currentChanged.connect(self.currentTabChanged)
+        layout = QtGui.QVBoxLayout()
+        layout.addWidget(self.central)
+        self.ui.sourceTextWidget.setLayout(layout)
+
+    def tabCloseRequestedHandler(self, index):
+        self.central.removeTab(index)
+
+    def currentTabChanged(self, index):
+        if index == -1:
+            return # all tab closed
+
+    def openSourceWindow(self, path, method=""):
+        '''Main function to open a .java source window
+           It checks if it already opened and open that tab,
+           otherwise, initialize a new window.
+        '''
+        sourcewin = self.getMeSourceWindowIfExists(path)
+        if not sourcewin:
+            sourcewin = SourceWindow(win=self, path=path)
+            sourcewin.reload_java_sources()
+            self.central.addTab(sourcewin, sourcewin.title)
+            self.central.setTabToolTip(self.central.indexOf(sourcewin), sourcewin.path)
+        if method:
+            sourcewin.browse_to_method(method)
+        self.central.setCurrentWidget(sourcewin)
+
+    def getMeSourceWindowIfExists(self, path):
+        '''Helper for openSourceWindow'''
+        for idx in range(self.central.count()):
+            if path == self.central.tabToolTip(idx):
+                return self.central.widget(idx)
+        return None
 
     def load_app_info_table(self):
         self.info = {}
