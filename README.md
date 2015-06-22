@@ -11,6 +11,11 @@ git clone https://github.com/DarioI/DroidSec.git
 cd DroidSec
 pip install -r requirements.txt
 ```
+- Run DroidSec:
+```
+python droidsec.py
+```
+Any bugs or problems, please mail to <dario.incalza@gmail.com>
 
 ##Features
 - Load .APK from system or dump from connected device
