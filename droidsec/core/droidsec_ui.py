@@ -1,25 +1,8 @@
-# This file is part of DroidSec.
-#
-# Copyright (C) 2015, Dario Incalza <dario.incalza at gmail.com>
-# All rights reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS-IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'droidsec.ui'
 #
-# Created: Sun Jun 21 22:22:15 2015
+# Created: Mon Jun 22 12:06:58 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -121,6 +104,9 @@ class Ui_MainWindow(object):
         self.sourceTextWidget.setGeometry(QtCore.QRect(300, 10, 911, 621))
         self.sourceTextWidget.setObjectName(_fromUtf8("sourceTextWidget"))
         self.tabWidget.addTab(self.tab_4, _fromUtf8(""))
+        self.btnFromDevice = QtGui.QPushButton(self.centralwidget)
+        self.btnFromDevice.setGeometry(QtCore.QRect(800, 10, 110, 32))
+        self.btnFromDevice.setObjectName(_fromUtf8("btnFromDevice"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1250, 22))
@@ -154,4 +140,5 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "APK", None))
         self.groupBox.setTitle(_translate("MainWindow", "Sources", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "Sources", None))
+        self.btnFromDevice.setText(_translate("MainWindow", "From Device...", None))
 

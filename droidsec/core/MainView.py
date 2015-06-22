@@ -23,7 +23,8 @@ from droidsec_ui import Ui_MainWindow
 from droidsec.core.logger import Logger
 from androguard.misc import *
 from androguard.gui.apkloading import ApkLoadingThread
-
+from sourcetreecontroller import TreeWindow
+import dumpey
 
 class MainView(QtGui.QMainWindow):
 
@@ -35,14 +36,11 @@ class MainView(QtGui.QMainWindow):
         self.__logger.log(Logger.INFO, "### DroidSec - dev version 0.01 ###")
         self.init_actions()
         self.setupApkLoading()
-        self.init_UI()
         self.apk_path = ''
         self.apk = None
         self.x = self.d = self.a = None
         self.manifest = None
 
-    def init_UI(self):
-        pass
 
     def setupApkLoading(self):
         self.apkLoadingThread = ApkLoadingThread()
@@ -57,6 +55,8 @@ class MainView(QtGui.QMainWindow):
         self.d = self.apkLoadingThread.d
         self.x = self.apkLoadingThread.x
 
+        self.sourcetreecontroller = TreeWindow(self,self.ui.treeWidget)
+        self.sourcetreecontroller.fill(self.d.get_classes())
         self.load_app_info_table()
         self.load_permissions()
         self.__logger.log(Logger.INFO,"Analysis of %s done!" % str(self.apk.get_app_name()))
@@ -170,6 +170,10 @@ class MainView(QtGui.QMainWindow):
         self.ui.chooseAPKBtn.clicked.connect(self.load_apk)
         self.ui.saveLogBtn.clicked.connect(self.__logger.saveLog)
         self.ui.clearLogBtn.clicked.connect(self.__logger.clearLog)
+        self.ui.btnFromDevice.clicked.connect(self.load_apk_from_device)
+
+    def load_apk_from_device(self):
+        
 
     def load_apk(self,path=None):
         if not path:
