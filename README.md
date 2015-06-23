@@ -38,7 +38,6 @@ Any bugs or problems, please mail to <dario.incalza@gmail.com>
 - Flask
 - IPy
 - ipython
-- numpy
 - PySide
 
 
