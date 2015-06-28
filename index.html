@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Droidsec by DarioI</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Droidsec</h1>
+        <p>DroidSec - Android Reverse Engineering Tool</p>
+
+        <p class="view"><a href="https://github.com/DarioI/DroidSec">View the Project on GitHub <small>DarioI/DroidSec</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/DarioI/DroidSec/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/DarioI/DroidSec/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/DarioI/DroidSec">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="droidsec-" class="anchor" href="#droidsec-" aria-hidden="true"><span class="octicon octicon-link"></span></a>DroidSec <a href="https://travis-ci.org/DarioI/DroidSec"><img src="https://travis-ci.org/DarioI/DroidSec.svg?branch=master" alt="Build Status"></a>
+</h1>
+
+<p>DroidSec is a security suite for analyzing Android .apk files. Core analysis technology is based on the awesome Androguard codebase.</p>
+
+<h2>
+<a id="development-phase" class="anchor" href="#development-phase" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development Phase</h2>
+
+<p>It is still heavily under development. Pull requests are appreciated. </p>
+
+<p>The sole purpose of this tool is for educational and security research purposes only. Use it on your own responsibility. </p>
+
+<h2>
+<a id="how-to-run" class="anchor" href="#how-to-run" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to run</h2>
+
+<ul>
+<li>Make sure Python 2.7 is installed and on your path</li>
+<li>Make sure Android Debug Bridge (ADB) is installed and on your path</li>
+<li>Install <a href="https://pip.pypa.io/en/latest/installing.html">pip</a>
+</li>
+<li>Download DroidSec and install requirements, run in a terminal: </li>
+</ul>
+
+<pre><code>git clone https://github.com/DarioI/DroidSec.git
+cd DroidSec
+pip install -r requirements.txt
+</code></pre>
+
+<ul>
+<li>Run DroidSec:</li>
+</ul>
+
+<pre><code>python droidsec.py
+</code></pre>
+
+<p>Any bugs or problems, please mail to <a href="mailto:dario.incalza@gmail.com">dario.incalza@gmail.com</a></p>
+
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>Load .APK from system or dump from connected device</li>
+<li>Android Permissions overview</li>
+<li>Application information</li>
+<li>Show usage of reflection code</li>
+<li>Show usage of dynamic code update</li>
+<li>Show usage of crypto code</li>
+<li>Show usage of permissions</li>
+<li>Decompilation and browsing through .java sources (integration of the Androguard Gui app)</li>
+</ul>
+
+<h2>
+<a id="roadmap" class="anchor" href="#roadmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>Roadmap</h2>
+
+<ul>
+<li>Instrument APKs</li>
+<li>Sign instrumented APKs</li>
+</ul>
+
+<h2>
+<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h2>
+
+<ul>
+<li>docutils</li>
+<li>dumpey</li>
+<li>Flask</li>
+<li>IPy</li>
+<li>ipython</li>
+<li>PySide</li>
+</ul>
+
+<h2>
+<a id="first-screenshots" class="anchor" href="#first-screenshots" aria-hidden="true"><span class="octicon octicon-link"></span></a>First Screenshots</h2>
+
+<p><img src="http://i.imgur.com/W0y4LrQ.png?1" alt="First screenshot" title="First Screenshot of DroidSec"></p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<h3>
+<a id="droidsec" class="anchor" href="#droidsec" aria-hidden="true"><span class="octicon octicon-link"></span></a>DroidSec</h3>
+
+<p>Copyright (C) 2015, Dario Incalza <a href="mailto:dario.incalza@gmail.com">dario.incalza@gmail.com</a>
+All rights reserved.</p>
+
+<p>Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+
+<p><a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+
+<h3>
+<a id="androguard" class="anchor" href="#androguard" aria-hidden="true"><span class="octicon octicon-link"></span></a>Androguard</h3>
+
+<p>Copyright (C) 2012/2013/2014, Anthony Desnos 
+All rights reserved.</p>
+
+<p>Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+
+<p><a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+
+<h3>
+<a id="dad" class="anchor" href="#dad" aria-hidden="true"><span class="octicon octicon-link"></span></a>DAD</h3>
+
+<p>Copyright (C) 2012/2013/2014, Geoffroy Gueguen <a href="mailto:geoffroy.gueguen@gmail.com">geoffroy.gueguen@gmail.com</a>
+All rights reserved.</p>
+
+<p>Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+
+<p><a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS-IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/DarioI">DarioI</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
