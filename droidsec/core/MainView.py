@@ -70,7 +70,15 @@ class MainView(QtGui.QMainWindow):
         self.ui.loadedAPK_label.setText("Loaded: "+str(self.apk.get_app_name()))
         self.set_loading_progressbar_disabled()
 
+    def disable_apk_loading_buttons(self):
+        self.ui.chooseAPKBtn.setDisabled(True)
+        self.ui.btnFromDevice.setDisabled(True)
+
     def setupTree(self,classes):
+        try:
+            self.ui.tree_area.layout().deleteLater()
+        except AttributeError:
+            pass
         self.tree = TreeWindow(self,self)
         self.tree.setWindowTitle("Tree model")
         layout = QtGui.QVBoxLayout()
@@ -272,6 +280,7 @@ class MainView(QtGui.QMainWindow):
             self.apk = apk.APK(path)
             self.manifest = self.apk.get_AndroidManifest().getElementsByTagName("manifest")[0]
             self.apkLoadingThread.load(path)
+            self.disable_apk_loading_buttons()
 
     def load_permissions(self):
         perms = self.get_uses_permissions()

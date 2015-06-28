@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'droidsec.ui'
 #
-# Created: Mon Jun 22 19:52:14 2015
+# Created: Sun Jun 28 18:34:40 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -39,7 +39,7 @@ class Ui_MainWindow(object):
         self.loadedAPK_label.setFont(font)
         self.loadedAPK_label.setObjectName(_fromUtf8("loadedAPK_label"))
         self.chooseAPKBtn = QtGui.QPushButton(self.centralwidget)
-        self.chooseAPKBtn.setGeometry(QtCore.QRect(679, 10, 121, 32))
+        self.chooseAPKBtn.setGeometry(QtCore.QRect(1020, 10, 121, 32))
         self.chooseAPKBtn.setObjectName(_fromUtf8("chooseAPKBtn"))
         self.tabWidget = QtGui.QTabWidget(self.centralwidget)
         self.tabWidget.setGeometry(QtCore.QRect(9, 39, 1231, 661))
@@ -104,7 +104,7 @@ class Ui_MainWindow(object):
         self.sourceTextWidget.setObjectName(_fromUtf8("sourceTextWidget"))
         self.tabWidget.addTab(self.tab_4, _fromUtf8(""))
         self.btnFromDevice = QtGui.QPushButton(self.centralwidget)
-        self.btnFromDevice.setGeometry(QtCore.QRect(800, 10, 110, 32))
+        self.btnFromDevice.setGeometry(QtCore.QRect(1140, 10, 110, 32))
         self.btnFromDevice.setObjectName(_fromUtf8("btnFromDevice"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)

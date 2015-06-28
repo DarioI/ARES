@@ -50,7 +50,7 @@
    <widget class="QPushButton" name="chooseAPKBtn">
     <property name="geometry">
      <rect>
-      <x>679</x>
+      <x>1020</x>
       <y>10</y>
       <width>121</width>
       <height>32</height>
@@ -258,7 +258,7 @@
    <widget class="QPushButton" name="btnFromDevice">
     <property name="geometry">
      <rect>
-      <x>800</x>
+      <x>1140</x>
       <y>10</y>
       <width>110</width>
       <height>32</height>
