@@ -44,6 +44,7 @@ Any bugs or problems, please mail to <dario.incalza@gmail.com>
 - Decompilation and browsing through .java sources (integration of the Androguard Gui app)
 
 ##Roadmap
+- Add the possibilty to extract and save .xml files and resources from an apk
 - Project management: save progress on an apk sample and make it possible to resume analysis
 - Instrument APKs
 - Sign instrumented APKs
