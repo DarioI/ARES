@@ -19,6 +19,18 @@ pip install -r requirements.txt
 ```
 python droidsec.py
 ```
+## Things to keep in mind
+- Make sure you are running adb version 1.0.32. Check your version using:
+```
+adb version
+```
+- When you run into any kind of problems where DroidSec starts complaining about not being able to connect with the Android device, make sure you can see the device in the adb list. To avoid any problems stop and start the adb server as root.
+```
+adb kill-server
+sudo adb start-server
+adb devices
+```
+
 Any bugs or problems, please mail to <dario.incalza@gmail.com>
 
 ##Features
@@ -32,6 +44,7 @@ Any bugs or problems, please mail to <dario.incalza@gmail.com>
 - Decompilation and browsing through .java sources (integration of the Androguard Gui app)
 
 ##Roadmap
+- Project management: save progress on an apk sample and make it possible to resume analysis
 - Instrument APKs
 - Sign instrumented APKs
 
