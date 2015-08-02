@@ -70,7 +70,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -215,6 +215,10 @@
        </column>
       </widget>
      </widget>
+     <zorder>groupBox_3</zorder>
+     <zorder>groupBox_2</zorder>
+     <zorder>groupBox_4</zorder>
+     <zorder>tabWidget_2</zorder>
     </widget>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
@@ -251,6 +255,30 @@
         <width>911</width>
         <height>621</height>
        </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="title">
+      <string>Manifest</string>
+     </attribute>
+     <widget class="QPlainTextEdit" name="manifest_source_xml_text">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>1201</width>
+        <height>571</height>
+       </rect>
+      </property>
+      <property name="documentTitle">
+       <string>AndroidManifest.xml</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="overwriteMode">
+       <bool>false</bool>
       </property>
      </widget>
     </widget>

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'droidsec.ui'
 #
-# Created: Sun Jun 28 18:34:40 2015
+# Created: Sun Aug  2 02:37:17 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -103,6 +103,14 @@ class Ui_MainWindow(object):
         self.sourceTextWidget.setGeometry(QtCore.QRect(300, 0, 911, 621))
         self.sourceTextWidget.setObjectName(_fromUtf8("sourceTextWidget"))
         self.tabWidget.addTab(self.tab_4, _fromUtf8(""))
+        self.tab_5 = QtGui.QWidget()
+        self.tab_5.setObjectName(_fromUtf8("tab_5"))
+        self.manifest_source_xml_text = QtGui.QPlainTextEdit(self.tab_5)
+        self.manifest_source_xml_text.setGeometry(QtCore.QRect(10, 10, 1201, 571))
+        self.manifest_source_xml_text.setReadOnly(True)
+        self.manifest_source_xml_text.setOverwriteMode(False)
+        self.manifest_source_xml_text.setObjectName(_fromUtf8("manifest_source_xml_text"))
+        self.tabWidget.addTab(self.tab_5, _fromUtf8(""))
         self.btnFromDevice = QtGui.QPushButton(self.centralwidget)
         self.btnFromDevice.setGeometry(QtCore.QRect(1140, 10, 110, 32))
         self.btnFromDevice.setObjectName(_fromUtf8("btnFromDevice"))
@@ -139,5 +147,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "APK", None))
         self.groupBox.setTitle(_translate("MainWindow", "Sources", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "Sources", None))
+        self.manifest_source_xml_text.setDocumentTitle(_translate("MainWindow", "AndroidManifest.xml", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), _translate("MainWindow", "Manifest", None))
         self.btnFromDevice.setText(_translate("MainWindow", "From Device...", None))
 

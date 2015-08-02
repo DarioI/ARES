@@ -29,6 +29,8 @@ from androguard.gui.apkloading import ApkLoadingThread
 from androguard.gui.treewindow import TreeWindow
 from androguard.gui.sourcewindow import SourceWindow
 from droidsec.ui.devicetable import DeviceTable
+from droidsec.ui.highlighter import XMLHighlighter
+import xml.dom.minidom
 
 
 class MainView(QtGui.QMainWindow):
@@ -66,6 +68,7 @@ class MainView(QtGui.QMainWindow):
         self.setupTree(self.d.get_classes())
         self.load_app_info_table()
         self.load_permissions()
+        self.show_android_manifest_xml()
         self.__logger.log(Logger.INFO,"Analysis of %s done!" % str(self.apk.get_app_name()))
         self.ui.loadedAPK_label.setText("Loaded: "+str(self.apk.get_app_name()))
         self.set_loading_progressbar_disabled()
@@ -73,6 +76,15 @@ class MainView(QtGui.QMainWindow):
     def disable_apk_loading_buttons(self):
         self.ui.chooseAPKBtn.setDisabled(True)
         self.ui.btnFromDevice.setDisabled(True)
+
+    def show_android_manifest_xml(self):
+        self.set_loading_progressbar_text("Decompiling AndroidManifest.xml")
+        buff = self.apk.get_android_manifest_xml().toprettyxml(encoding="utf-8")
+        rst = self.ui.manifest_source_xml_text
+        rst.setWindowTitle("AndroidManifest.xml - %s" % str(self.apk.get_app_name()))
+        hl=XMLHighlighter(rst.document())
+        rst.setPlainText(str(buff).strip())
+
 
     def setupTree(self,classes):
         try:
@@ -232,6 +244,8 @@ class MainView(QtGui.QMainWindow):
             str_info_dyn += (self.show_Path(self.x.get_vm(), path )+"\n\n\t")
         self.__logger.log_with_title("Usage of Dynamic Code",str_info_dyn)
 
+
+
     def show_reflection(self):
         if is_reflection_code(self.x) is False:
             self.__logger.log(Logger.WARNING,"No reflection code was found!")
@@ -305,6 +319,10 @@ class MainView(QtGui.QMainWindow):
         self.dialog.setCancelButton(None)
         self.dialog.setModal(True)
         self.dialog.show()
+
+    def set_loading_progressbar_text(self,text):
+        if self.dialog is not None:
+            self.dialog.setLabelText(text);
 
     def set_loading_progressbar_disabled(self):
         self.dialog.hide()
