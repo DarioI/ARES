@@ -47,19 +47,6 @@
      <string>No APK Loaded</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="chooseAPKBtn">
-    <property name="geometry">
-     <rect>
-      <x>1020</x>
-      <y>10</y>
-      <width>121</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Choose APK...</string>
-    </property>
-   </widget>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
@@ -70,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -215,10 +202,6 @@
        </column>
       </widget>
      </widget>
-     <zorder>groupBox_3</zorder>
-     <zorder>groupBox_2</zorder>
-     <zorder>groupBox_4</zorder>
-     <zorder>tabWidget_2</zorder>
     </widget>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
@@ -282,19 +265,6 @@
       </property>
      </widget>
     </widget>
-   </widget>
-   <widget class="QPushButton" name="btnFromDevice">
-    <property name="geometry">
-     <rect>
-      <x>1140</x>
-      <y>10</y>
-      <width>110</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>From Device...</string>
-    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

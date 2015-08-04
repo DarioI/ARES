@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'droidsec.ui'
 #
-# Created: Sun Aug  2 02:37:17 2015
+# Created: Tue Aug  4 21:12:26 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -38,9 +38,6 @@ class Ui_MainWindow(object):
         font.setPointSize(26)
         self.loadedAPK_label.setFont(font)
         self.loadedAPK_label.setObjectName(_fromUtf8("loadedAPK_label"))
-        self.chooseAPKBtn = QtGui.QPushButton(self.centralwidget)
-        self.chooseAPKBtn.setGeometry(QtCore.QRect(1020, 10, 121, 32))
-        self.chooseAPKBtn.setObjectName(_fromUtf8("chooseAPKBtn"))
         self.tabWidget = QtGui.QTabWidget(self.centralwidget)
         self.tabWidget.setGeometry(QtCore.QRect(9, 39, 1231, 661))
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
@@ -111,9 +108,6 @@ class Ui_MainWindow(object):
         self.manifest_source_xml_text.setOverwriteMode(False)
         self.manifest_source_xml_text.setObjectName(_fromUtf8("manifest_source_xml_text"))
         self.tabWidget.addTab(self.tab_5, _fromUtf8(""))
-        self.btnFromDevice = QtGui.QPushButton(self.centralwidget)
-        self.btnFromDevice.setGeometry(QtCore.QRect(1140, 10, 110, 32))
-        self.btnFromDevice.setObjectName(_fromUtf8("btnFromDevice"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1250, 22))
@@ -130,7 +124,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "DroidSec", None))
         self.loadedAPK_label.setText(_translate("MainWindow", "No APK Loaded", None))
-        self.chooseAPKBtn.setText(_translate("MainWindow", "Choose APK...", None))
         self.groupBox_3.setTitle(_translate("MainWindow", "Permissions", None))
         item = self.permsTable.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Uses permissions", None))
@@ -149,5 +142,4 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "Sources", None))
         self.manifest_source_xml_text.setDocumentTitle(_translate("MainWindow", "AndroidManifest.xml", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), _translate("MainWindow", "Manifest", None))
-        self.btnFromDevice.setText(_translate("MainWindow", "From Device...", None))
 

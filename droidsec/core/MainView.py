@@ -19,7 +19,6 @@ __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 
 from PySide import QtGui, QtCore
 
-from dumpey import dumpey
 import util
 from droidsec.ui.ui_utils import CustomTabBar
 from droidsec.ui.droidsec_ui import Ui_MainWindow
@@ -29,8 +28,8 @@ from androguard.gui.apkloading import ApkLoadingThread
 from androguard.gui.treewindow import TreeWindow
 from androguard.gui.sourcewindow import SourceWindow
 from droidsec.ui.devicetable import DeviceTable
+from droidsec.ui.sampledialog import SampleDialog
 from droidsec.ui.highlighter import XMLHighlighter
-import xml.dom.minidom
 
 
 class MainView(QtGui.QMainWindow):
@@ -47,6 +46,11 @@ class MainView(QtGui.QMainWindow):
         self.apk = None
         self.x = self.d = self.a = None
         self.manifest = None
+        self.show_sample_question()
+
+    def show_sample_question(self):
+        self.sample_dialog = SampleDialog(self)
+        self.sample_dialog.exec_()
 
     def get_logger(self):
         return self.__logger;
@@ -56,6 +60,7 @@ class MainView(QtGui.QMainWindow):
         self.connect(self.apkLoadingThread, QtCore.SIGNAL("loadedApk(bool)"), self.loadedApk)
 
     def loadedApk(self, success):
+        self.sample_dialog.close()
         if not success:
             self.__logger.log(Logger.ERROR,"Analysis of %s failed :(" % str(self.apkLoadingThread.apk_path))
             self.set_loading_progressbar_disabled()
@@ -73,9 +78,6 @@ class MainView(QtGui.QMainWindow):
         self.ui.loadedAPK_label.setText("Loaded: "+str(self.apk.get_app_name()))
         self.set_loading_progressbar_disabled()
 
-    def disable_apk_loading_buttons(self):
-        self.ui.chooseAPKBtn.setDisabled(True)
-        self.ui.btnFromDevice.setDisabled(True)
 
     def show_android_manifest_xml(self):
         self.set_loading_progressbar_text("Decompiling AndroidManifest.xml")
@@ -266,19 +268,11 @@ class MainView(QtGui.QMainWindow):
         self.__logger.log(Logger.INFO,"Libraries Used: "+str(self.apk.get_libraries()))
 
     def init_actions(self):
-
-        self.ui.chooseAPKBtn.clicked.connect(self.load_apk)
-        self.ui.btnFromDevice.clicked.connect(self.load_apk_from_device)
         self.ui.saveLogBtn.clicked.connect(self.__logger.saveLog)
         self.ui.clearLogBtn.clicked.connect(self.__logger.clearLog)
 
     def load_apk_from_device(self):
-        try:
-            dumpey.attached_devices()
-        except Exception:
-            self.__logger.log(Logger.ERROR,"No device has been detected. Are you sure an Android device is connected?"+
-                                           " Make sure adb is on your path.")
-            return
+
         table = DeviceTable(self)
         table.exec_()
 
@@ -294,7 +288,6 @@ class MainView(QtGui.QMainWindow):
             self.apk = apk.APK(path)
             self.manifest = self.apk.get_AndroidManifest().getElementsByTagName("manifest")[0]
             self.apkLoadingThread.load(path)
-            self.disable_apk_loading_buttons()
 
     def load_permissions(self):
         perms = self.get_uses_permissions()
