@@ -20,7 +20,8 @@ __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 from PySide import QtGui
 from PySide.QtGui import QMessageBox,QDialog
 from question_dialog import Ui_startDialog
-import dumpey
+from dumpey import dumpey
+import traceback,sys
 
 class SampleDialog(QtGui.QDialog):
 
@@ -37,5 +38,8 @@ class SampleDialog(QtGui.QDialog):
             dumpey.attached_devices()
             self.mainview.load_apk_from_device()
         except Exception:
+            print '-'*60
+            traceback.print_exc(file=sys.stdout)
+            print '-'*60
             QMessageBox.warning(self, "Error", "No device has been detected. Are you sure an Android device is connected? Make sure adb is on your path.")
             return
