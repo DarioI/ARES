@@ -31,8 +31,7 @@ class TreeWindow(QtGui.QTreeWidget):
                     path_node[0][path][1].setText(0, path)
                 path_node = path_node[0][path]
             # Class
-            path_node[0][path] = ({},
-                    QtGui.QTreeWidgetItem(path_node[1]))
+            path_node[0][path] = ({},QtGui.QTreeWidgetItem(path_node[1]))
             path_node[0][path][1].setText(0, sig.class_name)
 
 
