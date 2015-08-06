@@ -1,21 +1,15 @@
 from PySide import QtCore, QtGui
 
-from androguard.misc import save_session
+from androguard.session import Session
 from androguard.core import androconf
-from androguard.gui.apkloading import ApkLoadingThread
+from androguard.gui.fileloading import FileLoadingThread
 from androguard.gui.treewindow import TreeWindow
 from androguard.gui.sourcewindow import SourceWindow
+from androguard.gui.stringswindow import StringsWindow
+
 from androguard.gui.helpers import class2func
 
 import os
-
-class CustomTabBar(QtGui.QTabBar):
-    '''Subclass QTabBar to implement middle-click closing of tabs'''
-
-    def mouseReleaseEvent(self, event):
-        if event.button() == QtCore.Qt.MidButton:
-            self.tabCloseRequested.emit(self.tabAt(event.pos()))
-        super(QtGui.QTabBar, self).mouseReleaseEvent(event)
 
 class MainWindow(QtGui.QMainWindow):
 
@@ -25,19 +19,25 @@ class MainWindow(QtGui.QMainWindow):
        self.tree: TreeWindow(QTreeWidget) in self.dock
     '''
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, input_file=None):
         super(MainWindow, self).__init__(parent)
+        self.session = None
 
-        self.setupApkLoading()
+        self.setupSession()
 
         self.setupFileMenu()
+        self.setupViewMenu()
+        self.setupHelpMenu()
 
         self.setupCentral()
         self.setupEmptyTree()
         self.setupDock()
-        self.setWindowTitle("AndroGui")
+        self.setWindowTitle("Androguard GUI")
 
-        self.showStatus("AndroGui")
+        self.showStatus("Androguard GUI")
+
+        if input_file != None:
+            self.openFile(input_file)
 
     def showStatus(self, msg):
         '''Helper function called by any window to display a message
@@ -48,42 +48,57 @@ class MainWindow(QtGui.QMainWindow):
 
     def about(self):
         '''User clicked About menu. Display a Message box.'''
-        QtGui.QMessageBox.about(self, "About AndroGui",
-                "<p><b>AndroGui</b> is basically a Gui for Androguard :)." \
-                "<br>So we named it AndroGui :p. </p>")
+        QtGui.QMessageBox.about(self, "About Androguard GUI",
+                "<p><b>Androguard GUI</b> is basically a GUI for Androguard :)." \
+                "<br>Have fun !</p>")
 
-    def setupApkLoading(self):
-        self.apkLoadingThread = ApkLoadingThread()
-        self.connect(self.apkLoadingThread,
-                QtCore.SIGNAL("loadedApk(bool)"),
-                self.loadedApk)
+    def setupSession(self):
+        self.session = Session()
 
-    def loadedApk(self, success):
+        self.fileLoadingThread = FileLoadingThread(self.session)
+        self.connect(self.fileLoadingThread,
+                QtCore.SIGNAL("loadedFile(bool)"),
+                self.loadedFile)
+
+    def loadedFile(self, success):
         if not success:
             self.showStatus("Analysis of %s failed :(" %
-                    str(self.apkLoadingThread.apk_path))
+                    str(self.fileLoadingThread.file_path))
             return
-
-        self.a = self.apkLoadingThread.a
-        self.d = self.apkLoadingThread.d
-        self.x = self.apkLoadingThread.x
 
         self.updateDockWithTree()
         self.cleanCentral()
 
         self.showStatus("Analysis of %s done!" %
-                str(self.apkLoadingThread.apk_path))
+                str(self.fileLoadingThread.file_path))
 
     def openFile(self, path=None):
-        '''User clicked Open menu. Display a Dialog to ask which APK to open.'''
+        '''User clicked Open menu. Display a Dialog to ask which file to open.'''
+        self.session.reset()
+
         if not path:
             path = QtGui.QFileDialog.getOpenFileName(self, "Open File",
-                    '', "APK Files (*.apk);;Androguard Session (*.ag)")
+                    '', "Android Files (*.apk *.jar *.dex *.odex *.dey);;Androguard Session (*.ag)")
+            path = str(path[0])
+
+        if path:
+            self.setupTree()
+            self.showStatus("Analyzing %s..." % str(path))
+            self.fileLoadingThread.load(path)
+
+    def addFile(self, path=None):
+        '''User clicked Open menu. Display a Dialog to ask which APK to open.'''
+        if not self.session.isOpen():
+            return
+
+        if not path:
+            path = QtGui.QFileDialog.getOpenFileName(self, "Add File",
+                    '', "Android Files (*.apk *.jar *.dex *.odex *.dey)")
             path = str(path[0])
 
         if path:
             self.showStatus("Analyzing %s..." % str(path))
-            self.apkLoadingThread.load(path)
+            self.fileLoadingThread.load(path)
 
     def saveFile(self, path=None):
         '''User clicked Save menu. Display a Dialog to ask whwre to save.'''
@@ -96,16 +111,10 @@ class MainWindow(QtGui.QMainWindow):
             self.showStatus("Saving %s..." % str(path))
             self.saveSession(path)
 
-    def saveSession(self, path=None):
-        '''Save androguard session to same name as APK name except ending with .ag'''
-        path = self.apkLoadingThread.session_path if not path else path
-        if not path:
-            return
-        if not hasattr(self, "a") or not hasattr(self, "d") or not hasattr(self, "x"):
-            androconf.warning("session not saved because no Dalvik elements")
-            return
+    def saveSession(self, path):
+        '''Save androguard session.'''
         try:
-            save_session([self.a, self.d, self.x], path)
+            self.session.save(path)
         except RuntimeError, e:
             androconf.error(str(e))
             # http://stackoverflow.com/questions/2134706/hitting-maximum-recursion-depth-using-pythons-pickle-cpickle
@@ -115,14 +124,10 @@ class MainWindow(QtGui.QMainWindow):
 
     def quit(self):
         '''Clicked in File menu to exit or CTRL+Q to close main window'''
-
-        self.saveSession()
         QtGui.qApp.quit()
 
     def closeEvent(self, event):
         '''Clicked [x] to close main window'''
-
-        self.saveSession()
         event.accept()
 
     def setupEmptyTree(self):
@@ -139,15 +144,19 @@ class MainWindow(QtGui.QMainWindow):
         self.dock.setFeatures(QtGui.QDockWidget.NoDockWidgetFeatures)
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dock)
 
+    def setupTree(self):
+        androconf.debug("Setup Tree")
+        self.tree = TreeWindow(win=self, session=self.session)
+        self.tree.setWindowTitle("Tree model")
+        self.dock.setWidget(self.tree)
+
     def setupCentral(self):
         '''Setup empty window supporting tabs at startup. '''
         self.central = QtGui.QTabWidget()
-        self.central.setTabBar(CustomTabBar())
         self.central.setTabsClosable(True)
         self.central.tabCloseRequested.connect(self.tabCloseRequestedHandler)
         self.central.currentChanged.connect(self.currentTabChanged)
         self.setCentralWidget(self.central)
-
 
     def tabCloseRequestedHandler(self, index):
         self.central.removeTab(index)
@@ -166,44 +175,73 @@ class MainWindow(QtGui.QMainWindow):
         self.menuBar().addMenu(fileMenu)
 
         fileMenu.addAction("&Open...", self.openFile, "Ctrl+O")
+        fileMenu.addAction("&Add...", self.addFile, "Ctrl+A")
         fileMenu.addAction("&Save...", self.saveFile, "Ctrl+S")
         fileMenu.addAction("E&xit", self.quit, "Ctrl+Q")
+
+    def setupViewMenu(self):
+        viewMenu = QtGui.QMenu("&View", self)
+        self.menuBar().addMenu(viewMenu)
+
+        viewMenu.addAction("&Strings...", self.openStringsWindow)
+
+    def setupHelpMenu(self):
+        helpMenu = QtGui.QMenu("&Help", self)
+        self.menuBar().addMenu(helpMenu)
+
+        helpMenu.addAction("&About", self.about)
+        helpMenu.addAction("About &Qt", QtGui.qApp.aboutQt)
 
     def updateDockWithTree(self, empty=False):
         '''Update the classes tree. Called when
             - a new APK has been imported
             - a classe has been renamed (displayed in the tree)
         '''
-        if not hasattr(self, "d"):
-            androconf.debug("updateDockWithTree failed because no dalvik initialized")
-            return
-        if hasattr(self, "tree"):
-            del self.tree
-        self.tree = TreeWindow(win=self)
-        self.tree.setWindowTitle("Tree model")
-        self.dock.setWidget(self.tree)
-        self.tree.fill(self.d.get_classes())
+        self.setupTree()
+        self.tree.fill()
 
-    def openSourceWindow(self, path, method=""):
+
+    def openStringsWindow(self):
+        stringswin = StringsWindow(win=self, session=self.session)
+        self.central.addTab(stringswin, stringswin.title)
+        self.central.setTabToolTip(self.central.indexOf(stringswin), stringswin.title)
+        self.central.setCurrentWidget(stringswin)
+
+    def openBytecodeWindow(self, current_class, method=None):
+        pass#self.central.setCurrentWidget(sourcewin)
+
+    def openSourceWindow(self, current_class, method=None):
         '''Main function to open a .java source window
            It checks if it already opened and open that tab,
            otherwise, initialize a new window.
         '''
-        sourcewin = self.getMeSourceWindowIfExists(path)
+        androconf.debug("openSourceWindow for %s" % current_class)
+
+        sourcewin = self.getMeSourceWindowIfExists(current_class)
         if not sourcewin:
-            sourcewin = SourceWindow(win=self, path=path)
+            current_filename = self.session.get_filename_by_class(current_class)
+            current_digest = self.session.get_digest_by_class(current_class)
+
+            sourcewin = SourceWindow(win=self,
+                                    current_class=current_class,
+                                    current_title=current_class.current_title,
+                                    current_filename=current_filename,
+                                    current_digest=current_digest,
+                                    session=self.session)
             sourcewin.reload_java_sources()
             self.central.addTab(sourcewin, sourcewin.title)
-            self.central.setTabToolTip(self.central.indexOf(sourcewin), sourcewin.path)
+            self.central.setTabToolTip(self.central.indexOf(sourcewin), current_class.get_name())
+
         if method:
             sourcewin.browse_to_method(method)
+
         self.central.setCurrentWidget(sourcewin)
 
-    def getMeSourceWindowIfExists(self, path):
+    def getMeSourceWindowIfExists(self, current_class):
         '''Helper for openSourceWindow'''
         for idx in range(self.central.count()):
-            if path == self.central.tabToolTip(idx):
-                androconf.debug("Tab %s already opened at: %d" % (path, idx))
+            if current_class.get_name() == self.central.tabToolTip(idx):
+                androconf.debug("Tab %s already opened at: %d" % (current_class.get_name(), idx))
                 return self.central.widget(idx)
         return None
 
@@ -214,4 +252,3 @@ class MainWindow(QtGui.QMainWindow):
         except AttributeError:
             return False
         return True
-

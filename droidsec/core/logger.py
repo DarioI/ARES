@@ -98,9 +98,10 @@ class Logger(object):
 
         filename = "droidsec_log_" + str(datetime.now().strftime("%d%m%y-%H%M"))
         path = QtGui.QFileDialog.getSaveFileName(None, "Open file", filename, ".txt")
-        if path == '':
+        if len(path) == 0:
             return
         path_str = ''.join(path)
+
         text_file = open(path_str, "w")
         text_file.write(self.__console.toPlainText())
         text_file.close()

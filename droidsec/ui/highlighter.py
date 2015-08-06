@@ -68,7 +68,7 @@ class XMLHighlighter(QtGui.QSyntaxHighlighter):
 
         singleLineCommentFormat = QtGui.QTextCharFormat()
         singleLineCommentFormat.setForeground(QtCore.Qt.gray)
-        self.highlightingRules.append((QtCore.QRegExp("<!--[^\n]*-->"), singleLineCommentFormat))
+        self.highlightingRules.append(QtCore.QRegExp("<!--[^\n]*-->"), singleLineCommentFormat)
 
     def highlightBlock(self, text):
 
@@ -100,3 +100,77 @@ class XMLHighlighter(QtGui.QSyntaxHighlighter):
             self.setFormat(startIndex, commentLength, self.valueFormat)
 
             startIndex = self.valueStartExpression.indexIn(text, startIndex + commentLength);
+
+class ByteCodeHighlighter(QtGui.QSyntaxHighlighter):
+
+    def __init__(self, parent=None):
+        super(ByteCodeHighlighter, self).__init__(parent)
+
+        keywordFormat = QtGui.QTextCharFormat()
+        keywordFormat.setForeground(QtCore.Qt.darkMagenta)
+        keywordFormat.setFontWeight(QtGui.QFont.Bold)
+        keywordPatterns = ["^#\s*<init>\s*\([^()]*\)[A-Z]$","#\s\w*","\(.*?\)","\(([A-Za-z0-9_]+)\)"]
+        self.highlightingRules = [(QtCore.QRegExp(pattern), keywordFormat) for pattern in keywordPatterns]
+
+        xmlElementFormat = QtGui.QTextCharFormat()
+        xmlElementFormat.setFontWeight(QtGui.QFont.Bold)
+        xmlElementFormat.setForeground(QtCore.Qt.green)
+        bytecodeKeywords=["iget-object","move","new-array","aput-object","invoke-virtual","move-result-object","invoke-direct","invoke-static","new-instance","invoke-interface"]
+        for keyword in bytecodeKeywords:
+            self.highlightingRules.append((QtCore.QRegExp(keyword), xmlElementFormat))
+
+        constantsFormat2 = QtGui.QTextCharFormat()
+        constantsFormat2.setFontWeight(QtGui.QFont.Bold)
+        constantsFormat2.setForeground(QtCore.Qt.red)
+        constantKeys=["\w+(?:-\w+)+"]
+        #constantKeys=["goto\s*","return-void"]
+        for const in constantKeys:
+            self.highlightingRules.append((QtCore.QRegExp(const),constantsFormat2))
+
+        constantsFormat3 = QtGui.QTextCharFormat()
+        constantsFormat3.setFontWeight(QtGui.QFont.Bold)
+        constantsFormat3.setForeground(QtCore.Qt.darkGreen)
+        constantKeys=["goto\s*","return-void"]
+        for const in constantKeys:
+            self.highlightingRules.append((QtCore.QRegExp(const),constantsFormat3))
+
+        constantsFormat = QtGui.QTextCharFormat()
+        constantsFormat.setFontWeight(QtGui.QFont.Bold)
+        constantsFormat.setForeground(QtCore.Qt.darkYellow)
+        constantKeys=["const","const-class","const-string"]
+        for const in constantKeys:
+            self.highlightingRules.append((QtCore.QRegExp(const),constantsFormat))
+
+        self.valueStartExpression = QtCore.QRegExp("#")
+        self.valueEndExpression = QtCore.QRegExp("\"(?=[\s></])")
+
+    def highlightBlock(self, text):
+
+        for pattern, format in self.highlightingRules:
+
+            expression = QtCore.QRegExp(pattern)
+            index = expression.indexIn(text)
+
+            while index >= 0:
+                length = expression.matchedLength()
+                self.setFormat(index, length, format)
+                index = expression.indexIn(text, index + length)
+        '''
+        self.setCurrentBlockState(0)
+
+        startIndex = 0
+        if self.previousBlockState() != 1:
+            startIndex = self.valueStartExpression.indexIn(text)
+
+        while startIndex >= 0:
+            endIndex = self.valueEndExpression.indexIn(text, startIndex)
+
+            if endIndex == -1:
+                self.setCurrentBlockState(1)
+                commentLength = len(text) - startIndex
+            else:
+                commentLength = endIndex - startIndex + self.valueEndExpression.matchedLength()
+
+
+            startIndex = self.valueStartExpression.indexIn(text, startIndex + commentLength);
+                    '''

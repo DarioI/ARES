@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -211,9 +211,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>0</y>
+        <y>40</y>
         <width>281</width>
-        <height>621</height>
+        <height>591</height>
        </rect>
       </property>
       <property name="title">
@@ -225,7 +225,7 @@
          <x>10</x>
          <y>30</y>
          <width>251</width>
-         <height>581</height>
+         <height>551</height>
         </rect>
        </property>
       </widget>
@@ -240,29 +240,38 @@
        </rect>
       </property>
      </widget>
-    </widget>
-    <widget class="QWidget" name="tab_5">
-     <attribute name="title">
-      <string>Manifest</string>
-     </attribute>
-     <widget class="QPlainTextEdit" name="manifest_source_xml_text">
+     <widget class="QWidget" name="horizontalLayoutWidget">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>10</y>
-        <width>1201</width>
-        <height>571</height>
+        <y>0</y>
+        <width>281</width>
+        <height>41</height>
        </rect>
       </property>
-      <property name="documentTitle">
-       <string>AndroidManifest.xml</string>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-      <property name="overwriteMode">
-       <bool>false</bool>
-      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="saveJavaSources">
+         <property name="text">
+          <string>Save ...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="showManifestBtn">
+         <property name="text">
+          <string>Manifest ...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="showStringsBtn">
+         <property name="text">
+          <string>Strings ...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>
