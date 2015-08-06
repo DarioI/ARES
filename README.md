@@ -1,6 +1,18 @@
 # DroidSec [![Build Status](https://travis-ci.org/DarioI/DroidSec.svg?branch=master)](https://travis-ci.org/DarioI/DroidSec)
 DroidSec is a security suite for analyzing Android .apk files. Core analysis technology is based on the awesome Androguard codebase.
 
+##Features
+- Load .APK from system or dump from connected device
+- Android Permissions overview
+- Application information
+- Show usage of reflection code
+- Show usage of dynamic code update
+- Show usage of crypto code
+- Show usage of permissions
+- Show strings and manifest
+- Decompilation and browsing through .java sources (integration of the Androguard Gui app)
+- Decompilation and visualisation of bytecode
+
 ##Development Phase
 It is still heavily under development. Pull requests are appreciated. 
 
@@ -33,18 +45,9 @@ adb devices
 
 Any bugs or problems, please mail to <dario.incalza@gmail.com>
 
-##Features
-- Load .APK from system or dump from connected device
-- Android Permissions overview
-- Application information
-- Show usage of reflection code
-- Show usage of dynamic code update
-- Show usage of crypto code
-- Show usage of permissions
-- Decompilation and browsing through .java sources (integration of the Androguard Gui app)
+
 
 ##Roadmap
-- Add the possibilty to extract and save .xml files and resources from an apk
 - Project management: save progress on an apk sample and make it possible to resume analysis
 - Instrument APKs
 - Sign instrumented APKs
