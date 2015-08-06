@@ -107,14 +107,11 @@ class SourceWindow(QtGui.QTextEdit):
         lines.append(("COMMENTS", [("COMMENT", "/*\n * filename:%s\n * digest:%s\n */\n" % (self.current_filename, self.current_digest))]))
         lines.extend(self.current_class.get_source_ext())
 
-        #TODO: delete doc when tab is closed? not deleted by "self" :(
         if hasattr(self, "doc"):
             del self.doc
         self.doc = SourceDocument(parent=self, lines=lines)
         self.setDocument(self.doc)
 
-        #No need to save hightlighter. highlighBlock will automatically be called
-        #because we passed the QTextDocument to QSyntaxHighlighter constructor
         if PYGMENTS:
             PygmentsHighlighter(self.doc, lexer=JavaLexer())
         else:

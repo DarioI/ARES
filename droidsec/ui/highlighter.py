@@ -115,7 +115,14 @@ class ByteCodeHighlighter(QtGui.QSyntaxHighlighter):
         xmlElementFormat = QtGui.QTextCharFormat()
         xmlElementFormat.setFontWeight(QtGui.QFont.Bold)
         xmlElementFormat.setForeground(QtCore.Qt.green)
-        bytecodeKeywords=["iget-object","move","new-array","aput-object","invoke-virtual","move-result-object","invoke-direct","invoke-static","new-instance","invoke-interface"]
+        bytecodeKeywords=["iget-object",
+                          "iget","iput","throw",
+                          "move","new-array",
+                          "aput-object",
+                          "invoke-virtual",
+                          "move-result-object","invoke-direct",
+                          "invoke-static","new-instance",
+                          "invoke-interface"]
         for keyword in bytecodeKeywords:
             self.highlightingRules.append((QtCore.QRegExp(keyword), xmlElementFormat))
 
@@ -123,14 +130,13 @@ class ByteCodeHighlighter(QtGui.QSyntaxHighlighter):
         constantsFormat2.setFontWeight(QtGui.QFont.Bold)
         constantsFormat2.setForeground(QtCore.Qt.red)
         constantKeys=["\w+(?:-\w+)+"]
-        #constantKeys=["goto\s*","return-void"]
         for const in constantKeys:
             self.highlightingRules.append((QtCore.QRegExp(const),constantsFormat2))
 
         constantsFormat3 = QtGui.QTextCharFormat()
         constantsFormat3.setFontWeight(QtGui.QFont.Bold)
         constantsFormat3.setForeground(QtCore.Qt.darkGreen)
-        constantKeys=["goto\s*","return-void"]
+        constantKeys=["goto\s*","return-void","return-object","return"]
         for const in constantKeys:
             self.highlightingRules.append((QtCore.QRegExp(const),constantsFormat3))
 
@@ -155,22 +161,3 @@ class ByteCodeHighlighter(QtGui.QSyntaxHighlighter):
                 length = expression.matchedLength()
                 self.setFormat(index, length, format)
                 index = expression.indexIn(text, index + length)
-        '''
-        self.setCurrentBlockState(0)
-
-        startIndex = 0
-        if self.previousBlockState() != 1:
-            startIndex = self.valueStartExpression.indexIn(text)
-
-        while startIndex >= 0:
-            endIndex = self.valueEndExpression.indexIn(text, startIndex)
-
-            if endIndex == -1:
-                self.setCurrentBlockState(1)
-                commentLength = len(text) - startIndex
-            else:
-                commentLength = endIndex - startIndex + self.valueEndExpression.matchedLength()
-
-
-            startIndex = self.valueStartExpression.indexIn(text, startIndex + commentLength);
-                    '''
