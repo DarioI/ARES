@@ -25,11 +25,12 @@ from droidsec.ui.droidsec_ui import Ui_MainWindow
 from logger import Logger
 from droidsec.ui.devicetable import DeviceTable
 from droidsec.ui.sampledialog import SampleDialog
-from droidsec.ui.highlighter import XMLHighlighter
+from droidsec.ui.highlighter import XMLHighlighter,ByteCodeHighlighter
 from androguard.gui.treewindow import TreeWindow
 from androguard.core.analysis import analysis
 from androguard.core.analysis.analysis import uVMAnalysis
 from androguard.gui.sourcewindow import SourceWindow
+from androguard.gui.stringswindow import StringsWindow
 from androguard.gui.fileloading import FileLoadingThread
 from androguard.session import Session
 from androguard.core.bytecodes  import apk
@@ -42,7 +43,7 @@ class MainView(QtGui.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.__logger = Logger(self.ui.logArea)
-        self.__logger.log(Logger.INFO, "### DroidSec - dev version 0.01 ###")
+        self.__logger.log(Logger.INFO, '')
         self.init_actions()
         self.setup_fileloading()
         self.apk_path = ''
@@ -77,18 +78,18 @@ class MainView(QtGui.QMainWindow):
         self.setupTree()
         self.load_app_info_table()
         self.load_permissions()
-        self.show_android_manifest_xml()
         self.__logger.log(Logger.INFO,"Analysis of %s done!" % str(self.apk.get_app_name()))
         self.ui.loadedAPK_label.setText("Loaded: "+str(self.apk.get_app_name()))
         self.set_loading_progressbar_disabled()
 
-    def show_android_manifest_xml(self):
+    def get_android_manifest_xml(self):
         self.set_loading_progressbar_text("Decompiling AndroidManifest.xml")
         buff = self.apk.get_android_manifest_xml().toprettyxml(encoding="utf-8")
-        rst = self.ui.manifest_source_xml_text
-        rst.setWindowTitle("AndroidManifest.xml - %s" % str(self.apk.get_app_name()))
-        hl=XMLHighlighter(rst.document())
-        rst.setPlainText(str(buff).strip())
+        doc = QtGui.QTextEdit()
+        doc.setWindowTitle("AndroidManifest.xml - %s" % str(self.apk.get_app_name()))
+        hl = XMLHighlighter(doc.document())
+        doc.setPlainText(str(buff).strip())
+        return doc
 
     def setupTree(self):
         try:
@@ -141,19 +142,43 @@ class MainView(QtGui.QMainWindow):
             sourcewin.browse_to_method(method)
 
         self.central.setCurrentWidget(sourcewin)
-    '''
-    def openSourceWindow(self, path, method=""):
 
-        sourcewin = self.getMeSourceWindowIfExists(path)
-        if not sourcewin:
-            sourcewin = SourceWindow(win=self, session=self.session)
-            sourcewin.reload_java_sources()
-            self.central.addTab(sourcewin, sourcewin.title)
-            self.central.setTabToolTip(self.central.indexOf(sourcewin), sourcewin.path)
-        if method:
-            sourcewin.browse_to_method(method)
-        self.central.setCurrentWidget(sourcewin)
-    '''
+    def openManifestWindow(self):
+        manifest_tab = self.get_android_manifest_xml()
+        self.central.addTab(manifest_tab,"AndroidManifest.xml")
+        self.central.setCurrentWidget(manifest_tab)
+
+    def openStringsWindow(self):
+        stringswin = StringsWindow(win=self, session=self.session)
+        self.central.addTab(stringswin, stringswin.title)
+        self.central.setTabToolTip(self.central.indexOf(stringswin), stringswin.title)
+        self.central.setCurrentWidget(stringswin)
+
+    def openBytecodeWindow(self, current_class, method=None):
+        byte_code_str = ''
+        for clazz in self.d.get_classes():
+            if clazz.get_name() == current_class.get_name():
+                for method in clazz.get_methods():
+                    byte_code_str += "# "+method.get_name()+" "+method.get_descriptor()+"\n"
+                    byte_code = method.get_code()
+                    if byte_code != None:
+                        byte_code = byte_code.get_bc()
+                        idx = 0
+                        for i in byte_code.get_instructions():
+                            byte_code_str += "\t, %x " % (idx)+i.get_name()+" "+i.get_output()+"\n"
+                            idx += i.get_length()
+
+                    bytecode_tab = self.get_bytecode_window(byte_code_str)
+                    self.central.addTab(bytecode_tab,"Bytecode: "+current_class.get_name())
+                    self.central.setCurrentWidget(bytecode_tab)
+
+
+    def get_bytecode_window(self,byte_code):
+        doc = QtGui.QTextEdit()
+        hl = ByteCodeHighlighter(doc)
+        doc.setPlainText(str(byte_code).strip())
+        return doc
+
 
     def getMeSourceWindowIfExists(self, path):
         '''Helper for openSourceWindow'''
@@ -211,7 +236,6 @@ class MainView(QtGui.QMainWindow):
     def show_permissions(self):
         self.__logger.log(Logger.INFO,"Searching for permission usage, this can take a while depending on the size of the app.")
         p = self.x.get_permissions( [] )
-        str_perms=""
         self.__logger.log_with_title("Permissions Usage","")
         for i in p:
             self.__logger.log_with_color(Logger.WARNING,"\n\t======="+i+"=======\n")
@@ -292,16 +316,18 @@ class MainView(QtGui.QMainWindow):
     def init_actions(self):
         self.ui.saveLogBtn.clicked.connect(self.__logger.saveLog)
         self.ui.clearLogBtn.clicked.connect(self.__logger.clearLog)
+        self.ui.showStringsBtn.clicked.connect(self.openStringsWindow)
+        self.ui.showManifestBtn.clicked.connect(self.openManifestWindow)
 
     def load_apk_from_device(self):
-
-        table = DeviceTable(self)
+        table = DeviceTable(self,parent=self)
+        self.sample_dialog.close()
+        table.show_data()
         table.exec_()
 
     def load_apk(self,path=None):
         if not path:
-            path = QtGui.QFileDialog.getOpenFileName(self, "Open File",
-                    '', "APK Files (*.apk);;Androguard Session (*.ag)")
+            path = QtGui.QFileDialog.getOpenFileName(self, "Open File",'', "APK Files (*.apk);;Androguard Session (*.ag)")
             path = str(path[0])
         self.apk_path = path
         if path:

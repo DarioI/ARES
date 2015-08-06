@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'droidsec.ui'
 #
-# Created: Tue Aug  4 21:12:26 2015
+# Created: Thu Aug  6 21:50:27 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -91,23 +91,29 @@ class Ui_MainWindow(object):
         self.tab_4 = QtGui.QWidget()
         self.tab_4.setObjectName(_fromUtf8("tab_4"))
         self.groupBox = QtGui.QGroupBox(self.tab_4)
-        self.groupBox.setGeometry(QtCore.QRect(10, 0, 281, 621))
+        self.groupBox.setGeometry(QtCore.QRect(10, 40, 281, 591))
         self.groupBox.setObjectName(_fromUtf8("groupBox"))
         self.tree_area = QtGui.QWidget(self.groupBox)
-        self.tree_area.setGeometry(QtCore.QRect(10, 30, 251, 581))
+        self.tree_area.setGeometry(QtCore.QRect(10, 30, 251, 551))
         self.tree_area.setObjectName(_fromUtf8("tree_area"))
         self.sourceTextWidget = QtGui.QWidget(self.tab_4)
         self.sourceTextWidget.setGeometry(QtCore.QRect(300, 0, 911, 621))
         self.sourceTextWidget.setObjectName(_fromUtf8("sourceTextWidget"))
+        self.horizontalLayoutWidget = QtGui.QWidget(self.tab_4)
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 0, 281, 41))
+        self.horizontalLayoutWidget.setObjectName(_fromUtf8("horizontalLayoutWidget"))
+        self.horizontalLayout = QtGui.QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.saveJavaSources = QtGui.QPushButton(self.horizontalLayoutWidget)
+        self.saveJavaSources.setObjectName(_fromUtf8("saveJavaSources"))
+        self.horizontalLayout.addWidget(self.saveJavaSources)
+        self.showManifestBtn = QtGui.QPushButton(self.horizontalLayoutWidget)
+        self.showManifestBtn.setObjectName(_fromUtf8("showManifestBtn"))
+        self.horizontalLayout.addWidget(self.showManifestBtn)
+        self.showStringsBtn = QtGui.QPushButton(self.horizontalLayoutWidget)
+        self.showStringsBtn.setObjectName(_fromUtf8("showStringsBtn"))
+        self.horizontalLayout.addWidget(self.showStringsBtn)
         self.tabWidget.addTab(self.tab_4, _fromUtf8(""))
-        self.tab_5 = QtGui.QWidget()
-        self.tab_5.setObjectName(_fromUtf8("tab_5"))
-        self.manifest_source_xml_text = QtGui.QPlainTextEdit(self.tab_5)
-        self.manifest_source_xml_text.setGeometry(QtCore.QRect(10, 10, 1201, 571))
-        self.manifest_source_xml_text.setReadOnly(True)
-        self.manifest_source_xml_text.setOverwriteMode(False)
-        self.manifest_source_xml_text.setObjectName(_fromUtf8("manifest_source_xml_text"))
-        self.tabWidget.addTab(self.tab_5, _fromUtf8(""))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1250, 22))
@@ -118,7 +124,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -139,7 +145,8 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "Action", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "APK", None))
         self.groupBox.setTitle(_translate("MainWindow", "Sources", None))
+        self.saveJavaSources.setText(_translate("MainWindow", "Save ...", None))
+        self.showManifestBtn.setText(_translate("MainWindow", "Manifest ...", None))
+        self.showStringsBtn.setText(_translate("MainWindow", "Strings ...", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "Sources", None))
-        self.manifest_source_xml_text.setDocumentTitle(_translate("MainWindow", "AndroidManifest.xml", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), _translate("MainWindow", "Manifest", None))
 
