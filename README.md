@@ -11,7 +11,7 @@ DroidSec is a security suite for analyzing Android .apk files. Core analysis tec
 - Show usage of permissions
 - Show strings and manifest
 - Decompilation and browsing through .java sources (integration of the Androguard Gui app)
-- Decompilation and visualisation of bytecode
+- Decompilation and visualisation of bytecode with description lookup for bytecodes
 
 ##Development Phase
 It is still heavily under development. Pull requests are appreciated. 
