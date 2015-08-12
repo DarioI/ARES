@@ -25,7 +25,8 @@ from droidsec.ui.droidsec_ui import Ui_MainWindow
 from logger import Logger
 from droidsec.ui.devicetable import DeviceTable
 from droidsec.ui.sampledialog import SampleDialog
-from droidsec.ui.highlighter import XMLHighlighter,ByteCodeHighlighter
+from droidsec.ui.highlighter import XMLHighlighter
+from droidsec.ui.bytecodewindow import BytecodeWindow
 from androguard.gui.treewindow import TreeWindow
 from androguard.core.analysis import analysis
 from androguard.core.analysis.analysis import uVMAnalysis
@@ -176,11 +177,7 @@ class MainView(QtGui.QMainWindow):
         QtGui.QMessageBox.information(self, "Info", text)
 
     def get_bytecode_window(self,byte_code):
-        doc = QtGui.QTextEdit()
-        hl = ByteCodeHighlighter(doc)
-        doc.setPlainText(str(byte_code).strip())
-        return doc
-
+        return BytecodeWindow(byte_code,self)
 
     def getMeSourceWindowIfExists(self, path):
         '''Helper for openSourceWindow'''
