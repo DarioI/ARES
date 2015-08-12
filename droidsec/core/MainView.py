@@ -172,6 +172,8 @@ class MainView(QtGui.QMainWindow):
                     self.central.addTab(bytecode_tab,"Bytecode: "+current_class.get_name())
                     self.central.setCurrentWidget(bytecode_tab)
 
+    def showStatus(self,text):
+        QtGui.QMessageBox.information(self, "Info", text)
 
     def get_bytecode_window(self,byte_code):
         doc = QtGui.QTextEdit()
