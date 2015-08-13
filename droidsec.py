@@ -19,9 +19,7 @@
 __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 
 import sys
-
 from PySide import QtGui
-
 from droidsec.core.mainview import MainView
 
 if __name__ == '__main__':
