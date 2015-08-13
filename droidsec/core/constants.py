@@ -46,6 +46,4 @@ DEX_BYTECODE_SET = {
     "monitor-exit": "Release the monitor for the indicated object.\nNote: If this instruction needs to throw an exception, it must do so as if the pc has already advanced past the instruction. It may be useful to think of this as the instruction successfully executing (in a sense), and the exception getting thrown after the instruction but before the next one gets a chance to run. This definition makes it possible for a method to use a monitor cleanup catch-all (e.g., finally) block as the monitor cleanup for that block itself, as a way to handle the arbitrary exceptions that might get thrown due to the historical implementation of Thread.stop(), while still managing to have proper monitor hygiene.",
     "check-cast": "Throw a ClassCastException if the reference in the given register cannot be cast to the indicated type.",
     "instance-of": "Store in the given destination register 1 if the indicated reference is an instance of the given type, or 0 if not."
-
-
 }

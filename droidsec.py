@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # This file is part of DroidSec.
 #
 # Copyright (C) 2015, Dario Incalza <dario.incalza at gmail.com>
