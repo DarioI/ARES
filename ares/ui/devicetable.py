@@ -1,4 +1,4 @@
-# This file is part of DroidSec.
+# This file is part of ARES.
 #
 # Copyright (C) 2015, Dario Incalza <dario.incalza at gmail.com>
 # All rights reserved.
@@ -23,7 +23,7 @@ import os
 from PySide import QtGui, QtCore
 
 from devicetable_ui import Ui_Form
-from droidsec.core.logger import Logger
+from ares.core.logger import Logger
 from dumpey import dumpey
 
 

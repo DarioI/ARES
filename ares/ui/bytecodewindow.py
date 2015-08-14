@@ -1,4 +1,4 @@
-# This file is part of DroidSec.
+# This file is part of ARES.
 #
 # Copyright (C) 2015, Dario Incalza <dario.incalza at gmail.com>
 # All rights reserved.
@@ -17,7 +17,7 @@
 
 from PySide import QtGui,QtCore
 from highlighter import ByteCodeHighlighter
-from droidsec.core.constants import DEX_BYTECODE_SET
+from ares.core.constants import DEX_BYTECODE_SET
 
 class BytecodeWindow(QtGui.QTextEdit):
 

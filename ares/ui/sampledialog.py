@@ -1,4 +1,4 @@
-# This file is part of DroidSec.
+# This file is part of ARES.
 #
 # Copyright (C) 2015, Dario Incalza <dario.incalza at gmail.com>
 # All rights reserved.

@@ -1,4 +1,4 @@
-# This file is part of DroidSec.
+# This file is part of ARES.
 #
 # Copyright (C) 2015, Dario Incalza <dario.incalza at gmail.com>
 # All rights reserved.
@@ -20,13 +20,13 @@ __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 from PySide import QtGui, QtCore
 
 import util,os
-from droidsec.ui.ui_utils import CustomTabBar
-from droidsec.ui.droidsec_ui import Ui_MainWindow
+from ares.ui.ui_utils import CustomTabBar
+from ares.ui.droidsec_ui import Ui_MainWindow
 from logger import Logger
-from droidsec.ui.devicetable import DeviceTable
-from droidsec.ui.sampledialog import SampleDialog
-from droidsec.ui.highlighter import XMLHighlighter
-from droidsec.ui.bytecodewindow import BytecodeWindow
+from ares.ui.devicetable import DeviceTable
+from ares.ui.sampledialog import SampleDialog
+from ares.ui.highlighter import XMLHighlighter
+from ares.ui.bytecodewindow import BytecodeWindow
 from androguard.gui.treewindow import TreeWindow
 from androguard.core.analysis import analysis
 from androguard.core.analysis.analysis import uVMAnalysis

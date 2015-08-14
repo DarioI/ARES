@@ -1,4 +1,4 @@
-# This file is part of DroidSec.
+# This file is part of ARES.
 #
 # Copyright (C) 2015, Dario Incalza <dario.incalza at gmail.com>
 # All rights reserved.
@@ -92,11 +92,11 @@ class Logger(object):
     def clearLog(self):
 
         self.__console.clear()
-        self.log(Logger.INFO, "### DroidSec - dev version 0.01 ###")
+        self.log(Logger.INFO, "### ARES - dev version 0.01 ###")
 
     def saveLog(self):
 
-        filename = "droidsec_log_" + str(datetime.now().strftime("%d%m%y-%H%M"))
+        filename = "ARES_log_" + str(datetime.now().strftime("%d%m%y-%H%M"))
         path = QtGui.QFileDialog.getSaveFileName(None, "Open file", filename, ".txt")
         if len(path) == 0:
             return

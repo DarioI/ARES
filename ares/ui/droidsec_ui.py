@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'droidsec.ui'
+# Form implementation generated from reading ui file 'ares.ui'
 #
 # Created: Thu Aug  6 21:50:27 2015
 #      by: PyQt4 UI code generator 4.11.3
@@ -128,7 +128,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "DroidSec", None))
+        MainWindow.setWindowTitle(_translate("MainWindow", "ARES", None))
         self.loadedAPK_label.setText(_translate("MainWindow", "No APK Loaded", None))
         self.groupBox_3.setTitle(_translate("MainWindow", "Permissions", None))
         item = self.permsTable.horizontalHeaderItem(0)

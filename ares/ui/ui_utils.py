@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# This file is part of DroidSec.
+# This file is part of ARES.
 #
 # Copyright (C) 2015, Dario Incalza <dario.incalza at gmail.com>
 # All rights reserved.
@@ -16,15 +15,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-__author__ = 'Dario Incalza <dario.incalza@gmail.com>'
+__author__ = 'Dario Incalza'
 
-import sys
-from PySide import QtGui
-from droidsec.core.mainview import MainView
+from PySide import QtCore,QtGui
 
-if __name__ == '__main__':
-    sys.setrecursionlimit(50000)
-    app = QtGui.QApplication(sys.argv)
-    window = MainView()
-    window.show()
-    sys.exit(app.exec_())
+class CustomTabBar(QtGui.QTabBar):
+    '''Subclass QTabBar to implement middle-click closing of tabs'''
+
+    def mouseReleaseEvent(self, event):
+        if event.button() == QtCore.Qt.MidButton:
+            self.tabCloseRequested.emit(self.tabAt(event.pos()))
+        super(QtGui.QTabBar, self).mouseReleaseEvent(event)

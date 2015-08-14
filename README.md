@@ -1,5 +1,5 @@
-# DroidSec [![Build Status](https://travis-ci.org/DarioI/DroidSec.svg?branch=master)](https://travis-ci.org/DarioI/DroidSec)
-DroidSec is a security suite for analyzing Android .apk files. Core analysis technology is based on the awesome Androguard codebase.
+# ARES [![Build Status](https://travis-ci.org/DarioI/DroidSec.svg?branch=master)](https://travis-ci.org/DarioI/DroidSec)
+ARES is a security suite for analyzing Android .apk files. Core analysis technology is based on the awesome Androguard codebase.
 
 ##Features
 - Load .APK from system or dump from connected device
@@ -21,22 +21,22 @@ The sole purpose of this tool is for educational and security research purposes 
 - Make sure Python 2.7 is installed and on your path
 - Make sure Android Debug Bridge (ADB) is installed and on your path
 - Install [pip](https://pip.pypa.io/en/latest/installing.html)
-- Download DroidSec and install requirements, run in a terminal: 
+- Download ARES and install requirements, run in a terminal:
 ```
 git clone https://github.com/DarioI/DroidSec.git
-cd DroidSec
+cd ARES
 pip install -r requirements.txt
 ```
-- Run DroidSec:
+- Run ARES:
 ```
-./droidsec.py
+./ares.py
 ```
 ## Things to keep in mind
 - Make sure you are running adb version 1.0.32. Check your version using:
 ```
 adb version
 ```
-- When you run into any kind of problems where DroidSec starts complaining about not being able to connect with the Android device, make sure you can see the device in the adb list. To avoid any problems stop and start the adb server as root.
+- When you run into any kind of problems where ARES starts complaining about not being able to connect with the Android device, make sure you can see the device in the adb list. To avoid any problems stop and start the adb server as root.
 ```
 adb kill-server
 sudo adb start-server
@@ -61,10 +61,10 @@ Any bugs or problems, please mail to <dario.incalza@gmail.com>
 - PySide
 
 ##First Screenshots
-![First screenshot](http://i.imgur.com/W0y4LrQ.png?1 "First Screenshot of DroidSec")
+![First screenshot](http://i.imgur.com/W0y4LrQ.png?1 "First Screenshot of ARES")
 
 ##License
-###DroidSec
+###ARES
 Copyright (C) 2015, Dario Incalza <dario.incalza@gmail.com>
 All rights reserved.
 
