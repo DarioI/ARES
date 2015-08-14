@@ -5,7 +5,7 @@
     <title>Droidsec by DarioI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
@@ -13,17 +13,34 @@
     <section class="page-header">
       <h1 class="project-name">Droidsec</h1>
       <h2 class="project-tagline">DroidSec - Android Reverse Engineering Tool</h2>
-      <a href="https://github.com/DarioI/DroidSec" class="btn">View on GitHub</a>
-      <a href="https://github.com/DarioI/DroidSec/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/DarioI/DroidSec/tarball/master" class="btn">Download .tar.gz</a>
+      <a href="https://github.com/DarioI/ARES" class="btn">View on GitHub</a>
+      <a href="https://github.com/DarioI/ARES/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/DarioI/ARES/tarball/master" class="btn">Download .tar.gz</a>
     </section>
 
     <section class="main-content">
       <h1>
-<a id="droidsec-" class="anchor" href="#droidsec-" aria-hidden="true"><span class="octicon octicon-link"></span></a>DroidSec <a href="https://travis-ci.org/DarioI/DroidSec"><img src="https://travis-ci.org/DarioI/DroidSec.svg?branch=master" alt="Build Status"></a>
-</h1>
+<a id="ares---android-reverse-engineering-suite" class="anchor" href="#ares---android-reverse-engineering-suite" aria-hidden="true"><span class="octicon octicon-link"></span></a>ARES - Android Reverse Engineering Suite</h1>
 
-<p>DroidSec is a security suite for analyzing Android .apk files. Core analysis technology is based on the awesome Androguard codebase.</p>
+<p>Build status:   <a href="https://travis-ci.org/DarioI/DroidSec"><img src="https://travis-ci.org/DarioI/DroidSec.svg?branch=master" alt="Build Status"></a></p>
+
+<p>ARES is a security suite for analyzing Android .apk files. Core analysis technology is based on the awesome Androguard codebase.</p>
+
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>Load .APK from system or dump from connected device</li>
+<li>Android Permissions overview</li>
+<li>Application information</li>
+<li>Show usage of reflection code</li>
+<li>Show usage of dynamic code update</li>
+<li>Show usage of crypto code</li>
+<li>Show usage of permissions</li>
+<li>Show strings and manifest</li>
+<li>Decompilation and browsing through .java sources (integration of the Androguard Gui app)</li>
+<li>Decompilation and visualisation of bytecode with description lookup for bytecodes</li>
+</ul>
 
 <h2>
 <a id="development-phase" class="anchor" href="#development-phase" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development Phase</h2>
@@ -40,19 +57,19 @@
 <li>Make sure Android Debug Bridge (ADB) is installed and on your path</li>
 <li>Install <a href="https://pip.pypa.io/en/latest/installing.html">pip</a>
 </li>
-<li>Download DroidSec and install requirements, run in a terminal: </li>
+<li>Download ARES and install requirements, run in a terminal:</li>
 </ul>
 
-<pre><code>git clone https://github.com/DarioI/DroidSec.git
-cd DroidSec
+<pre><code>git clone https://github.com/DarioI/ARES.git
+cd ARES
 pip install -r requirements.txt
 </code></pre>
 
 <ul>
-<li>Run DroidSec:</li>
+<li>Run ARES:</li>
 </ul>
 
-<pre><code>python droidsec.py
+<pre><code>./ares.py
 </code></pre>
 
 <h2>
@@ -66,7 +83,7 @@ pip install -r requirements.txt
 </code></pre>
 
 <ul>
-<li>When you run into any kind of problems where DroidSec starts complaining about not being able to connect with the Android device, make sure you can see the device in the adb list. To avoid any problems stop and start the adb server as root.</li>
+<li>When you run into any kind of problems where ARES starts complaining about not being able to connect with the Android device, make sure you can see the device in the adb list. To avoid any problems stop and start the adb server as root.</li>
 </ul>
 
 <pre><code>adb kill-server
@@ -77,24 +94,9 @@ adb devices
 <p>Any bugs or problems, please mail to <a href="mailto:dario.incalza@gmail.com">dario.incalza@gmail.com</a></p>
 
 <h2>
-<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
-
-<ul>
-<li>Load .APK from system or dump from connected device</li>
-<li>Android Permissions overview</li>
-<li>Application information</li>
-<li>Show usage of reflection code</li>
-<li>Show usage of dynamic code update</li>
-<li>Show usage of crypto code</li>
-<li>Show usage of permissions</li>
-<li>Decompilation and browsing through .java sources (integration of the Androguard Gui app)</li>
-</ul>
-
-<h2>
 <a id="roadmap" class="anchor" href="#roadmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>Roadmap</h2>
 
 <ul>
-<li>Add the possibilty to extract and save .xml files and resources from an apk</li>
 <li>Project management: save progress on an apk sample and make it possible to resume analysis</li>
 <li>Instrument APKs</li>
 <li>Sign instrumented APKs</li>
@@ -115,13 +117,13 @@ adb devices
 <h2>
 <a id="first-screenshots" class="anchor" href="#first-screenshots" aria-hidden="true"><span class="octicon octicon-link"></span></a>First Screenshots</h2>
 
-<p><img src="http://i.imgur.com/W0y4LrQ.png?1" alt="First screenshot" title="First Screenshot of DroidSec"></p>
+<p><img src="http://i.imgur.com/W0y4LrQ.png?1" alt="First screenshot" title="First Screenshot of ARES"></p>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
 <h3>
-<a id="droidsec" class="anchor" href="#droidsec" aria-hidden="true"><span class="octicon octicon-link"></span></a>DroidSec</h3>
+<a id="ares" class="anchor" href="#ares" aria-hidden="true"><span class="octicon octicon-link"></span></a>ARES</h3>
 
 <p>Copyright (C) 2015, Dario Incalza <a href="mailto:dario.incalza@gmail.com">dario.incalza@gmail.com</a>
 All rights reserved.</p>
@@ -175,7 +177,7 @@ See the License for the specific language governing permissions and
 limitations under the License.</p>
 
       <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/DarioI/DroidSec">Droidsec</a> is maintained by <a href="https://github.com/DarioI">DarioI</a>.</span>
+        <span class="site-footer-owner"><a href="https://github.com/DarioI/ARES">Droidsec</a> is maintained by <a href="https://github.com/DarioI">DarioI</a>.</span>
 
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
@@ -185,4 +187,3 @@ limitations under the License.</p>
   
   </body>
 </html>
-
