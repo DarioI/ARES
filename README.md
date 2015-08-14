@@ -1,4 +1,4 @@
-# ARES [![Build Status](https://travis-ci.org/DarioI/DroidSec.svg?branch=master)](https://travis-ci.org/DarioI/DroidSec)
+# ARES - Android Reverse Engineering Suite[![Build Status](https://travis-ci.org/DarioI/DroidSec.svg?branch=master)](https://travis-ci.org/DarioI/DroidSec)
 ARES is a security suite for analyzing Android .apk files. Core analysis technology is based on the awesome Androguard codebase.
 
 ##Features
