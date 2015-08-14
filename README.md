@@ -29,7 +29,7 @@ pip install -r requirements.txt
 ```
 - Run DroidSec:
 ```
-python droidsec.py
+./droidsec.py
 ```
 ## Things to keep in mind
 - Make sure you are running adb version 1.0.32. Check your version using:
