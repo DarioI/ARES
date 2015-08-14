@@ -26,7 +26,7 @@ The sole purpose of this tool is for educational and security research purposes 
 - Install [pip](https://pip.pypa.io/en/latest/installing.html)
 - Download ARES and install requirements, run in a terminal:
 ```
-git clone https://github.com/DarioI/DroidSec.git
+git clone https://github.com/DarioI/ARES.git
 cd ARES
 pip install -r requirements.txt
 ```
