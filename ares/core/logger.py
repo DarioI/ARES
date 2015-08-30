@@ -38,6 +38,7 @@ class Logger(object):
     def __init__(self, console):
         self.__console = console
         self.__console.setTextBackgroundColor(QColor(0, 0, 0))
+        self.clearLog()
 
     '''
     Log a text to inform the user of a certain IO action. Given : the text that needs to be displayed. A timestamp will be printed before the text.

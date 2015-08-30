@@ -79,8 +79,11 @@ class MainView(QtGui.QMainWindow):
         self.setupTree()
         self.load_app_info_table()
         self.load_permissions()
-        self.__logger.log(Logger.INFO,"Analysis of %s done!" % str(self.apk.get_app_name()))
-        self.ui.loadedAPK_label.setText("Loaded: "+str(self.apk.get_app_name()))
+        try:
+            self.__logger.log(Logger.INFO,"Analysis of %s done!" % str(self.apk.get_app_name()))
+            self.ui.loadedAPK_label.setText("Loaded: "+str(self.apk.get_app_name()))
+        except UnicodeEncodeError:
+            self.__logger.log(Logger.WARNING,"Non ascii code characters detected, some strings are possibly not displayed properly.")
         self.set_loading_progressbar_disabled()
 
     def get_android_manifest_xml(self):
