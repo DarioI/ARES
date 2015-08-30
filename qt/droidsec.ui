@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -245,7 +245,7 @@
        <rect>
         <x>10</x>
         <y>0</y>
-        <width>281</width>
+        <width>294</width>
         <height>41</height>
        </rect>
       </property>
@@ -272,6 +272,88 @@
         </widget>
        </item>
       </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Resources</string>
+     </attribute>
+     <widget class="QGroupBox" name="groupBox_5">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>281</width>
+        <height>631</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Files from APK</string>
+      </property>
+      <widget class="QTableWidget" name="resourceFileTable">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>256</width>
+         <height>591</height>
+        </rect>
+       </property>
+       <property name="autoScroll">
+        <bool>true</bool>
+       </property>
+       <column>
+        <property name="text">
+         <string>Filename</string>
+        </property>
+       </column>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_6">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>0</y>
+        <width>921</width>
+        <height>511</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Viewer</string>
+      </property>
+      <widget class="QGraphicsView" name="graphicview">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>901</width>
+         <height>461</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_7">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>500</y>
+        <width>921</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>File Info</string>
+      </property>
+      <widget class="QTextEdit" name="fileResourceInfo">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>901</width>
+         <height>78</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
     </widget>
    </widget>

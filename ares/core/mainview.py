@@ -25,6 +25,7 @@ from ares.ui.droidsec_ui import Ui_MainWindow
 from logger import Logger
 from ares.ui.devicetable import DeviceTable
 from ares.ui.sampledialog import SampleDialog
+from ares.controllers.resourcefilecontroller import ResourceFileController
 from ares.ui.highlighter import XMLHighlighter
 from ares.ui.bytecodewindow import BytecodeWindow
 from androguard.gui.treewindow import TreeWindow
@@ -77,6 +78,7 @@ class MainView(QtGui.QMainWindow):
         self.x = uVMAnalysis(self.d)
 
         self.setupTree()
+        self.setupResourceController()
         self.load_app_info_table()
         self.load_permissions()
         try:
@@ -85,6 +87,12 @@ class MainView(QtGui.QMainWindow):
         except UnicodeEncodeError:
             self.__logger.log(Logger.WARNING,"Non ascii code characters detected, some strings are possibly not displayed properly.")
         self.set_loading_progressbar_disabled()
+
+    def setupResourceController(self):
+        self.resourcecontroller = ResourceFileController(self.apk,
+                                                         self.ui.resourceFileTable,
+                                                         self.ui.graphicview,
+                                                         self.ui.fileResourceInfo)
 
     def get_android_manifest_xml(self):
         self.set_loading_progressbar_text("Decompiling AndroidManifest.xml")
@@ -196,10 +204,12 @@ class MainView(QtGui.QMainWindow):
         self.info["Android Version Name"]        = self.apk.get_androidversion_name()
         self.info["Android Version Code"]        = self.apk.get_androidversion_code()
         self.info["Android Package Name"]        = self.apk.get_package()
+        self.info["Signature Name"]              = self.apk.get_signature_name()
         self.info["Uses Dynamic Code Loading"]   = str(analysis.is_dyn_code(self.x))
         self.info["Uses Reflection"]             = str(analysis.is_reflection_code(self.x))
         self.info["Uses Crypto"]                 = str(analysis.is_crypto_code(self.x))
         self.info["Number of Activities"]        = str(len(self.apk.get_activities()))
+        self.info["Number of Services"]          = str(len(self.apk.get_services()))
         self.info["Number of Libraries"]         = str(len(self.apk.get_libraries()))
         self.info["Number of Permissions"]       = str(len(self.get_uses_permissions()))
 
@@ -209,10 +219,12 @@ class MainView(QtGui.QMainWindow):
         self.info_actions["Android Version Name"]        = None
         self.info_actions["Android Version Code"]        = None
         self.info_actions["Android Package Name"]        = None
+        self.info_actions["Signature Name"]              = self.show_signature
         self.info_actions["Uses Dynamic Code Loading"]   = self.show_dyncode
         self.info_actions["Uses Reflection"]             = self.show_reflection
         self.info_actions["Uses Crypto"]                 = self.show_cryptocode
         self.info_actions["Number of Activities"]        = self.show_activities
+        self.info_actions["Number of Services"]          = self.show_services
         self.info_actions["Number of Libraries"]         = self.show_libraries
         self.info_actions["Number of Permissions"]       = self.show_permissions
         info_table = self.ui.appInfoTable
@@ -234,6 +246,13 @@ class MainView(QtGui.QMainWindow):
             if action_button is not None:
                 info_table.setCellWidget(row,2,action_button)
             row += 1
+
+    def show_signature(self):
+        self.__logger.log_with_title("Signature",self.apk.get_signature())
+        self.__logger.log_with_title("Files",str(self.apk.get_files()))
+
+    def show_services(self):
+        self.__logger.log_with_title("Services",'\n\t -'+'\n\t -'.join(self.apk.get_services()))
 
     def show_permissions(self):
         self.__logger.log(Logger.INFO,"Searching for permission usage, this can take a while depending on the size of the app.")

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ares.ui'
+# Form implementation generated from reading ui file '../../qt/droidsec.ui'
 #
-# Created: Thu Aug  6 21:50:27 2015
+# Created: Sun Aug 30 10:15:20 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -100,7 +100,7 @@ class Ui_MainWindow(object):
         self.sourceTextWidget.setGeometry(QtCore.QRect(300, 0, 911, 621))
         self.sourceTextWidget.setObjectName(_fromUtf8("sourceTextWidget"))
         self.horizontalLayoutWidget = QtGui.QWidget(self.tab_4)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 0, 281, 41))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 0, 294, 41))
         self.horizontalLayoutWidget.setObjectName(_fromUtf8("horizontalLayoutWidget"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
@@ -114,6 +114,31 @@ class Ui_MainWindow(object):
         self.showStringsBtn.setObjectName(_fromUtf8("showStringsBtn"))
         self.horizontalLayout.addWidget(self.showStringsBtn)
         self.tabWidget.addTab(self.tab_4, _fromUtf8(""))
+        self.tab = QtGui.QWidget()
+        self.tab.setObjectName(_fromUtf8("tab"))
+        self.groupBox_5 = QtGui.QGroupBox(self.tab)
+        self.groupBox_5.setGeometry(QtCore.QRect(0, 0, 281, 631))
+        self.groupBox_5.setObjectName(_fromUtf8("groupBox_5"))
+        self.resourceFileTable = QtGui.QTableWidget(self.groupBox_5)
+        self.resourceFileTable.setGeometry(QtCore.QRect(10, 30, 256, 591))
+        self.resourceFileTable.setObjectName(_fromUtf8("resourceFileTable"))
+        self.resourceFileTable.setColumnCount(1)
+        self.resourceFileTable.setRowCount(0)
+        item = QtGui.QTableWidgetItem()
+        self.resourceFileTable.setHorizontalHeaderItem(0, item)
+        self.groupBox_6 = QtGui.QGroupBox(self.tab)
+        self.groupBox_6.setGeometry(QtCore.QRect(290, 0, 921, 511))
+        self.groupBox_6.setObjectName(_fromUtf8("groupBox_6"))
+        self.graphicview = QtGui.QGraphicsView(self.groupBox_6)
+        self.graphicview.setGeometry(QtCore.QRect(10, 30, 901, 461))
+        self.graphicview.setObjectName(_fromUtf8("graphicview"))
+        self.groupBox_7 = QtGui.QGroupBox(self.tab)
+        self.groupBox_7.setGeometry(QtCore.QRect(290, 500, 921, 121))
+        self.groupBox_7.setObjectName(_fromUtf8("groupBox_7"))
+        self.fileResourceInfo = QtGui.QTextEdit(self.groupBox_7)
+        self.fileResourceInfo.setGeometry(QtCore.QRect(10, 30, 901, 78))
+        self.fileResourceInfo.setObjectName(_fromUtf8("fileResourceInfo"))
+        self.tabWidget.addTab(self.tab, _fromUtf8(""))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1250, 22))
@@ -124,11 +149,11 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "ARES", None))
+        MainWindow.setWindowTitle(_translate("MainWindow", "DroidSec", None))
         self.loadedAPK_label.setText(_translate("MainWindow", "No APK Loaded", None))
         self.groupBox_3.setTitle(_translate("MainWindow", "Permissions", None))
         item = self.permsTable.horizontalHeaderItem(0)
@@ -149,4 +174,10 @@ class Ui_MainWindow(object):
         self.showManifestBtn.setText(_translate("MainWindow", "Manifest ...", None))
         self.showStringsBtn.setText(_translate("MainWindow", "Strings ...", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "Sources", None))
+        self.groupBox_5.setTitle(_translate("MainWindow", "Files from APK", None))
+        item = self.resourceFileTable.horizontalHeaderItem(0)
+        item.setText(_translate("MainWindow", "Filename", None))
+        self.groupBox_6.setTitle(_translate("MainWindow", "Viewer", None))
+        self.groupBox_7.setTitle(_translate("MainWindow", "File Info", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Resources", None))
 
