@@ -82,9 +82,10 @@ class MainView(QtGui.QMainWindow):
         self.load_app_info_table()
         self.load_permissions()
         try:
-            self.__logger.log(Logger.INFO,"Analysis of %s done!" % str(self.apk.get_app_name()))
-            self.ui.loadedAPK_label.setText("Loaded: "+str(self.apk.get_app_name()))
+            self.__logger.log(Logger.INFO,"Analysis of %s done!" % str(self.apk.get_app_name()).toUtf8())
+            self.ui.loadedAPK_label.setText("Loaded: "+str(self.apk.get_app_name()).toUtf8())
         except UnicodeEncodeError:
+            self.ui.loadedAPK_label.setText("APK Loaded! (non-ascii chars detected)")
             self.__logger.log(Logger.WARNING,"Non ascii code characters detected, some strings are possibly not displayed properly.")
         self.set_loading_progressbar_disabled()
 
@@ -98,7 +99,7 @@ class MainView(QtGui.QMainWindow):
         self.set_loading_progressbar_text("Decompiling AndroidManifest.xml")
         buff = self.apk.get_android_manifest_xml().toprettyxml(encoding="utf-8")
         doc = QtGui.QTextEdit()
-        doc.setWindowTitle("AndroidManifest.xml - %s" % str(self.apk.get_app_name()))
+        doc.setWindowTitle("AndroidManifest.xml")
         hl = XMLHighlighter(doc.document())
         doc.setPlainText(str(buff).strip())
         return doc
@@ -208,6 +209,7 @@ class MainView(QtGui.QMainWindow):
         self.info["Uses Dynamic Code Loading"]   = str(analysis.is_dyn_code(self.x))
         self.info["Uses Reflection"]             = str(analysis.is_reflection_code(self.x))
         self.info["Uses Crypto"]                 = str(analysis.is_crypto_code(self.x))
+        self.info["Number of Providers"]         = str(len(self.apk.get_providers()))
         self.info["Number of Activities"]        = str(len(self.apk.get_activities()))
         self.info["Number of Services"]          = str(len(self.apk.get_services()))
         self.info["Number of Libraries"]         = str(len(self.apk.get_libraries()))
@@ -223,6 +225,7 @@ class MainView(QtGui.QMainWindow):
         self.info_actions["Uses Dynamic Code Loading"]   = self.show_dyncode
         self.info_actions["Uses Reflection"]             = self.show_reflection
         self.info_actions["Uses Crypto"]                 = self.show_cryptocode
+        self.info_actions["Number of Providers"]         = self.show_providers
         self.info_actions["Number of Activities"]        = self.show_activities
         self.info_actions["Number of Services"]          = self.show_services
         self.info_actions["Number of Libraries"]         = self.show_libraries
@@ -247,9 +250,11 @@ class MainView(QtGui.QMainWindow):
                 info_table.setCellWidget(row,2,action_button)
             row += 1
 
+    def show_providers(self):
+        self.__logger.log_with_title("Providers",self.apk.get_providers())
+
     def show_signature(self):
         self.__logger.log_with_title("Signature",self.apk.get_signature())
-        self.__logger.log_with_title("Files",str(self.apk.get_files()))
 
     def show_services(self):
         self.__logger.log_with_title("Services",'\n\t -'+'\n\t -'.join(self.apk.get_services()))

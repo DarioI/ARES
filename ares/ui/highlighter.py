@@ -68,7 +68,7 @@ class XMLHighlighter(QtGui.QSyntaxHighlighter):
 
         singleLineCommentFormat = QtGui.QTextCharFormat()
         singleLineCommentFormat.setForeground(QtCore.Qt.gray)
-        self.highlightingRules.append(QtCore.QRegExp("<!--[^\n]*-->"), singleLineCommentFormat)
+        self.highlightingRules.append((QtCore.QRegExp("<!--[^\n]*-->"), singleLineCommentFormat))
 
     def highlightBlock(self, text):
 
