@@ -52,6 +52,7 @@ Any bugs or problems, please mail to <dario.incalza@gmail.com>
 
 
 ##Roadmap
+- Add Simplify pre-processing to remove encryption and eliminate dead-code in app
 - Project management: save progress on an apk sample and make it possible to resume analysis
 - Instrument APKs
 - Sign instrumented APKs
