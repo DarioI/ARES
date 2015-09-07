@@ -270,7 +270,7 @@ class MainView(QtGui.QMainWindow):
 
     def show_cryptocode(self):
         if analysis.is_crypto_code(self.x) is False:
-            self.__logger.log(Logger.WARNING,"No crypto code was found!")
+            self.__logger.log(Logger.WARNING,"No crypto code was found! Maybe it uses adapted or obfuscated encryption code.")
             return
 
         paths = []

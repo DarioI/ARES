@@ -18,7 +18,8 @@
 __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 
 from PySide.QtGui import QTableWidgetItem
-from PySide import QtGui
+from PySide import QtGui,QtCore
+
 
 class ResourceFileController(object):
 
@@ -36,11 +37,14 @@ class ResourceFileController(object):
         self.filetable.setAutoScroll(True)
         self.filetable.setSelectionMode(QtGui.QTableView.SingleSelection)
         self.filetable.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
-        self.filetable.doubleClicked.connect(self.file_clicked)
+        self.filetable.itemDoubleClicked.connect(self.file_clicked)
 
     def file_clicked(self,item):
-        #FIXME: Add file viewing action here
-        print item
+        file = self.apk.get_file(str(item.text()))
+        pixmap = QtGui.QPixmap()
+        pixmap.loadFromData(file)
+        scaledPixmap = pixmap.scaled(self.viewer.size(), QtCore.Qt.KeepAspectRatio)
+        self.viewer.setPixmap(scaledPixmap)
 
     def fill_table(self):
         i = 0

@@ -299,6 +299,12 @@
          <height>591</height>
         </rect>
        </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOn</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOn</enum>
+       </property>
        <property name="autoScroll">
         <bool>true</bool>
        </property>
@@ -321,7 +327,7 @@
       <property name="title">
        <string>Viewer</string>
       </property>
-      <widget class="QGraphicsView" name="graphicview">
+      <widget class="QLabel" name="graphicview">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -329,6 +335,9 @@
          <width>901</width>
          <height>461</height>
         </rect>
+       </property>
+       <property name="text">
+        <string>Graphic</string>
        </property>
       </widget>
      </widget>

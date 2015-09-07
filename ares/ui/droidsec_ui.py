@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '../../qt/droidsec.ui'
 #
-# Created: Sun Aug 30 10:15:20 2015
+# Created: Sun Aug 30 21:41:38 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -121,6 +121,9 @@ class Ui_MainWindow(object):
         self.groupBox_5.setObjectName(_fromUtf8("groupBox_5"))
         self.resourceFileTable = QtGui.QTableWidget(self.groupBox_5)
         self.resourceFileTable.setGeometry(QtCore.QRect(10, 30, 256, 591))
+        self.resourceFileTable.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.resourceFileTable.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.resourceFileTable.setAutoScroll(True)
         self.resourceFileTable.setObjectName(_fromUtf8("resourceFileTable"))
         self.resourceFileTable.setColumnCount(1)
         self.resourceFileTable.setRowCount(0)
@@ -129,7 +132,7 @@ class Ui_MainWindow(object):
         self.groupBox_6 = QtGui.QGroupBox(self.tab)
         self.groupBox_6.setGeometry(QtCore.QRect(290, 0, 921, 511))
         self.groupBox_6.setObjectName(_fromUtf8("groupBox_6"))
-        self.graphicview = QtGui.QGraphicsView(self.groupBox_6)
+        self.graphicview = QtGui.QLabel(self.groupBox_6)
         self.graphicview.setGeometry(QtCore.QRect(10, 30, 901, 461))
         self.graphicview.setObjectName(_fromUtf8("graphicview"))
         self.groupBox_7 = QtGui.QGroupBox(self.tab)
@@ -178,6 +181,7 @@ class Ui_MainWindow(object):
         item = self.resourceFileTable.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Filename", None))
         self.groupBox_6.setTitle(_translate("MainWindow", "Viewer", None))
+        self.graphicview.setText(_translate("MainWindow", "Graphic", None))
         self.groupBox_7.setTitle(_translate("MainWindow", "File Info", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Resources", None))
 
