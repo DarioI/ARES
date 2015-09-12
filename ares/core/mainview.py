@@ -82,8 +82,8 @@ class MainView(QtGui.QMainWindow):
         self.load_app_info_table()
         self.load_permissions()
         try:
-            self.__logger.log(Logger.INFO,"Analysis of %s done!" % str(self.apk.get_app_name()).toUtf8())
-            self.ui.loadedAPK_label.setText("Loaded: "+str(self.apk.get_app_name()).toUtf8())
+            self.__logger.log(Logger.INFO,"Analysis of %s done!" % str(self.apk.get_app_name()))
+            self.ui.loadedAPK_label.setText("Loaded: "+str(self.apk.get_app_name()))
         except UnicodeEncodeError:
             self.ui.loadedAPK_label.setText("APK Loaded! (non-ascii chars detected)")
             self.__logger.log(Logger.WARNING,"Non ascii code characters detected, some strings are possibly not displayed properly.")
