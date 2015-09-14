@@ -8,19 +8,20 @@ from androguard.core.analysis.analysis import *
 from androguard.decompiler.decompiler import *
 from androguard.misc import save_session, load_session
 
+
 class Session(object):
 
-    def __init__(self):
+    def __init__(self, export_ipython=False):
         self.setupObjects()
+        self.export_ipython = export_ipython
 
     def save(self, filename):
-        save_session([self.analyzed_files,
-                      self.analyzed_digest,
-                      self.analyzed_apk,
-                      self.analyzed_dex], filename)
+        save_session([self.analyzed_files, self.analyzed_digest,
+                      self.analyzed_apk, self.analyzed_dex], filename)
 
     def load(self, filename):
-        self.analyzed_files, self.analyzed_digest, self.analyzed_apk, self.analyzed_dex = load_session(filename)
+        self.analyzed_files, self.analyzed_digest, self.analyzed_apk, self.analyzed_dex = load_session(
+            filename)
 
     def setupObjects(self):
         self.analyzed_files = collections.OrderedDict()
@@ -38,29 +39,68 @@ class Session(object):
         digest = hashlib.sha256(data).hexdigest()
         androconf.debug("add APK:%s" % digest)
         apk = APK(data, True)
-        self.analyzed_apk[digest] = apk
+        self.analyzed_apk[digest] = [apk]
         self.analyzed_files[filename].append(digest)
         self.analyzed_digest[digest] = filename
         androconf.debug("added APK:%s" % digest)
-        return digest, apk
+        return (digest, apk)
 
-    def get_DX(self):
-        return self.dx
-
-    def get_DalvikForm(self):
-        return self.d
-
-    def addDEX(self, filename, data):
+    def addDEX(self, filename, data, dx=None):
         digest = hashlib.sha256(data).hexdigest()
-        self.d = DalvikVMFormat(data)
-        self.dx = newVMAnalysis(self.d)
-        self.dx.create_xref()
-        self.d.set_decompiler(DecompilerDAD(self.d, self.dx))
-        self.analyzed_dex[digest] = (self.d, self.dx)
+        androconf.debug("add DEX:%s" % digest)
+
+        d = DalvikVMFormat(data)
+        self.format = d
+        dx = self.runAnalysis(d, dx)
+
+        androconf.debug("added DEX:%s" % digest)
+
+        self.analyzed_dex[digest] = (d, dx)
+        if filename not in self.analyzed_files:
+            self.analyzed_files[filename] = []
+
         self.analyzed_files[filename].append(digest)
         self.analyzed_digest[digest] = filename
 
-        return digest, self.d, self.dx
+        if self.export_ipython:
+            d.create_python_export()
+
+        return (digest, d, dx)
+
+    def addDEY(self, filename, data, dx=None):
+        digest = hashlib.sha256(data).hexdigest()
+        androconf.debug("add DEY:%s" % digest)
+
+        d = DalvikOdexVMFormat(data)
+        dx = self.runAnalysis(d, dx)
+
+        androconf.debug("added DEY:%s" % digest)
+
+        self.analyzed_dex[digest] = (d, dx)
+        if filename not in self.analyzed_files:
+            self.analyzed_files[filename] = []
+
+        self.analyzed_files[filename].append(digest)
+        self.analyzed_digest[digest] = filename
+
+        if self.export_ipython:
+            d.create_python_export()
+
+        return (digest, d, dx)
+
+    def runAnalysis(self, d, dx=None):
+        androconf.debug("VMAnalysis ...")
+        if dx == None:
+            dx = newVMAnalysis(d)
+        else:
+            dx.add(d)
+
+        dx.create_xref()
+
+        d.set_decompiler(DecompilerDAD(d, dx))
+        d.set_vmanalysis(dx)
+
+        return dx
 
     def add(self, filename, raw_data):
         ret = is_android_raw(raw_data)
@@ -69,9 +109,19 @@ class Session(object):
             digest = hashlib.sha256(raw_data).hexdigest()
             if ret == "APK":
                 apk_digest, apk = self.addAPK(filename, raw_data)
-                self.addDEX(filename, apk.get_dex())
+                dex_files = list(apk.get_all_dex())
+
+                if dex_files:
+                    dex_digest, _, dx = self.addDEX(filename, dex_files[0])
+                    self.analyzed_apk[digest].append(dex_digest)
+                    for i in range(1, len(dex_files)):
+                        dex_digest, _, _ = self.addDEX(filename, dex_files[i],
+                                                       dx)
+                        self.analyzed_apk[digest].append(dex_digest)
             elif ret == "DEX":
                 self.addDEX(filename, raw_data)
+            elif ret == "DEY":
+                self.addDEY(filename, raw_data)
             else:
                 return False
             return True
@@ -82,8 +132,8 @@ class Session(object):
         for filename in self.analyzed_files:
             for digest in self.analyzed_files[filename]:
                 if digest in self.analyzed_dex:
-                    self.d, _ = self.analyzed_dex[digest]
-                    yield idx, filename, digest, self.d.get_classes()
+                    d, _ = self.analyzed_dex[digest]
+                    yield idx, filename, digest, d.get_classes()
             idx += 1
 
     def get_analysis(self, current_class):
@@ -117,7 +167,8 @@ class Session(object):
     def get_strings(self):
         for digest in self.analyzed_dex:
             d, dx = self.analyzed_dex[digest]
-            yield digest, self.analyzed_digest[digest], dx.get_strings_analysis()
+            yield digest, self.analyzed_digest[digest], dx.get_strings_analysis(
+            )
 
     def get_nb_strings(self):
         nb = 0
@@ -125,3 +176,25 @@ class Session(object):
             d, dx = self.analyzed_dex[digest]
             nb += len(dx.get_strings_analysis())
         return nb
+
+    def get_objects_apk(self, filename):
+        digest = self.analyzed_files.get(filename)
+        if digest:
+            a = self.analyzed_apk[digest[0]][0]
+
+            d = None
+            dx = None
+
+            if len(self.analyzed_apk[digest[0]][1:]) > 1:
+                d = []
+                for dex_file in self.analyzed_apk[digest[0]][1:]:
+                    d.append(self.analyzed_dex[dex_file][0])
+            else:
+                dex_file = self.analyzed_dex[self.analyzed_apk[digest[0]][1]]
+                d = dex_file[0]
+                dx = dex_file[1]
+            return a, d, dx
+        return None
+
+    def get_DalvikForm(self):
+        return self.format

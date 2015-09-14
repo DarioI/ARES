@@ -11,17 +11,17 @@ from androguard.gui.helpers import class2func
 
 import os
 
-class MainWindow(QtGui.QMainWindow):
 
+class MainWindow(QtGui.QMainWindow):
     '''Main window:
        self.central: QTabWidget in center area
        self.dock: QDockWidget in left area
        self.tree: TreeWindow(QTreeWidget) in self.dock
     '''
 
-    def __init__(self, parent=None, input_file=None):
+    def __init__(self, parent=None, session=Session(), input_file=None):
         super(MainWindow, self).__init__(parent)
-        self.session = None
+        self.session = session
 
         self.setupSession()
 
@@ -53,32 +53,30 @@ class MainWindow(QtGui.QMainWindow):
                 "<br>Have fun !</p>")
 
     def setupSession(self):
-        self.session = Session()
-
         self.fileLoadingThread = FileLoadingThread(self.session)
-        self.connect(self.fileLoadingThread,
-                QtCore.SIGNAL("loadedFile(bool)"),
-                self.loadedFile)
+        self.connect(self.fileLoadingThread, QtCore.SIGNAL("loadedFile(bool)"),
+                     self.loadedFile)
 
     def loadedFile(self, success):
         if not success:
             self.showStatus("Analysis of %s failed :(" %
-                    str(self.fileLoadingThread.file_path))
+                            str(self.fileLoadingThread.file_path))
             return
 
         self.updateDockWithTree()
         self.cleanCentral()
 
         self.showStatus("Analysis of %s done!" %
-                str(self.fileLoadingThread.file_path))
+                        str(self.fileLoadingThread.file_path))
 
     def openFile(self, path=None):
         '''User clicked Open menu. Display a Dialog to ask which file to open.'''
         self.session.reset()
 
         if not path:
-            path = QtGui.QFileDialog.getOpenFileName(self, "Open File",
-                    '', "Android Files (*.apk *.jar *.dex *.odex *.dey);;Androguard Session (*.ag)")
+            path = QtGui.QFileDialog.getOpenFileName(
+                self, "Open File", '',
+                "Android Files (*.apk *.jar *.dex *.odex *.dey);;Androguard Session (*.ag)")
             path = str(path[0])
 
         if path:
@@ -92,8 +90,9 @@ class MainWindow(QtGui.QMainWindow):
             return
 
         if not path:
-            path = QtGui.QFileDialog.getOpenFileName(self, "Add File",
-                    '', "Android Files (*.apk *.jar *.dex *.odex *.dey)")
+            path = QtGui.QFileDialog.getOpenFileName(
+                self, "Add File", '',
+                "Android Files (*.apk *.jar *.dex *.odex *.dey)")
             path = str(path[0])
 
         if path:
@@ -103,8 +102,8 @@ class MainWindow(QtGui.QMainWindow):
     def saveFile(self, path=None):
         '''User clicked Save menu. Display a Dialog to ask whwre to save.'''
         if not path:
-            path = QtGui.QFileDialog.getSaveFileName(self, "Save File",
-                    '', "Androguard Session (*.ag)")
+            path = QtGui.QFileDialog.getSaveFileName(
+                self, "Save File", '', "Androguard Session (*.ag)")
             path = str(path[0])
 
         if path:
@@ -164,7 +163,7 @@ class MainWindow(QtGui.QMainWindow):
     def currentTabChanged(self, index):
         androconf.debug("curentTabChanged -> %d" % index)
         if index == -1:
-            return # all tab closed
+            return  # all tab closed
 
     def cleanCentral(self):
         #TOFIX: Removes all the pages, but does not delete them.
@@ -200,15 +199,15 @@ class MainWindow(QtGui.QMainWindow):
         self.setupTree()
         self.tree.fill()
 
-
     def openStringsWindow(self):
         stringswin = StringsWindow(win=self, session=self.session)
         self.central.addTab(stringswin, stringswin.title)
-        self.central.setTabToolTip(self.central.indexOf(stringswin), stringswin.title)
+        self.central.setTabToolTip(self.central.indexOf(stringswin),
+                                   stringswin.title)
         self.central.setCurrentWidget(stringswin)
 
     def openBytecodeWindow(self, current_class, method=None):
-        pass#self.central.setCurrentWidget(sourcewin)
+        pass  #self.central.setCurrentWidget(sourcewin)
 
     def openSourceWindow(self, current_class, method=None):
         '''Main function to open a .java source window
@@ -223,14 +222,15 @@ class MainWindow(QtGui.QMainWindow):
             current_digest = self.session.get_digest_by_class(current_class)
 
             sourcewin = SourceWindow(win=self,
-                                    current_class=current_class,
-                                    current_title=current_class.current_title,
-                                    current_filename=current_filename,
-                                    current_digest=current_digest,
-                                    session=self.session)
+                                     current_class=current_class,
+                                     current_title=current_class.current_title,
+                                     current_filename=current_filename,
+                                     current_digest=current_digest,
+                                     session=self.session)
             sourcewin.reload_java_sources()
             self.central.addTab(sourcewin, sourcewin.title)
-            self.central.setTabToolTip(self.central.indexOf(sourcewin), current_class.get_name())
+            self.central.setTabToolTip(self.central.indexOf(sourcewin),
+                                       current_class.get_name())
 
         if method:
             sourcewin.browse_to_method(method)
@@ -241,7 +241,8 @@ class MainWindow(QtGui.QMainWindow):
         '''Helper for openSourceWindow'''
         for idx in range(self.central.count()):
             if current_class.get_name() == self.central.tabToolTip(idx):
-                androconf.debug("Tab %s already opened at: %d" % (current_class.get_name(), idx))
+                androconf.debug("Tab %s already opened at: %d" %
+                                (current_class.get_name(), idx))
                 return self.central.widget(idx)
         return None
 
