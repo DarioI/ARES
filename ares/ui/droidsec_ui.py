@@ -156,7 +156,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "DroidSec", None))
+        MainWindow.setWindowTitle(_translate("MainWindow", "ARES", None))
         self.loadedAPK_label.setText(_translate("MainWindow", "No APK Loaded", None))
         self.groupBox_3.setTitle(_translate("MainWindow", "Permissions", None))
         item = self.permsTable.horizontalHeaderItem(0)
