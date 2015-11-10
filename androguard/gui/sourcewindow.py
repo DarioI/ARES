@@ -3,6 +3,7 @@ from androguard.core import androconf
 from androguard.gui.helpers import class2func, method2func, classdot2func, classdot2class, proto2methodprotofunc
 from androguard.gui.renamewindow import RenameDialog
 from androguard.gui.xrefwindow import XrefDialogMethod, XrefDialogField
+import clipboard
 
 PYGMENTS = True
 try:
@@ -199,7 +200,20 @@ class SourceWindow(QtGui.QTextEdit):
                                      self,
                                      statusTip="",
                                      triggered=self.display_bytecodes))
+
+        menu.addAction(QtGui.QAction(
+            "Copy",
+            self,
+            statusTip="Copy selected text",
+            triggered=self.copyText))
+
         menu.exec_(QtGui.QCursor.pos())
+
+    def copyText(self):
+        cursor = self.textCursor()
+        selection = cursor.selectedText()
+        clipboard.copy(selection)
+
 
     def actionXref(self):
         cursor = self.textCursor()
