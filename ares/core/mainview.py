@@ -36,7 +36,7 @@ from androguard.gui.stringswindow import StringsWindow
 from androguard.gui.fileloading import FileLoadingThread
 from androguard.session import Session
 from androguard.core.bytecodes  import apk
-
+import subprocess,re,tempfile
 
 class MainView(QtGui.QMainWindow):
 
@@ -254,7 +254,19 @@ class MainView(QtGui.QMainWindow):
         self.__logger.log_with_title("Providers",self.apk.get_providers())
 
     def show_signature(self):
-        self.__logger.log_with_title("Signature",self.apk.get_signature())
+        certname = ""
+        signature_expr = re.compile("^(META-INF/)(.*)(\.RSA|\.DSA)$")
+        for i in self.apk.get_files():
+            if signature_expr.search(i):
+                f = tempfile.NamedTemporaryFile(delete=False)
+                f.write(self.apk.get_file(i))
+                f.close()
+                certname = f.name
+
+        cmd = ["keytool","-printcert","-file",certname]
+        proc = subprocess.Popen(cmd,stdout=subprocess.PIPE)
+        (out,err) = proc.communicate()
+        self.__logger.log_with_title("Signature",out)
 
     def show_services(self):
         self.__logger.log_with_title("Services",'\n\t -'+'\n\t -'.join(self.apk.get_services()))
