@@ -17,6 +17,7 @@
 
 from PySide import QtGui,QtCore
 from highlighter import ByteCodeHighlighter
+import clipboard
 from ares.core.constants import DEX_BYTECODE_SET
 
 class BytecodeWindow(QtGui.QTextEdit):
@@ -35,7 +36,19 @@ class BytecodeWindow(QtGui.QTextEdit):
         menu.addAction(QtGui.QAction("Bytecode lookup ...", self,
                 statusTip="Get the description of the selected bytecode",
                 triggered=self.action_bytecode_lookup))
+
+        menu.addAction(QtGui.QAction(
+            "Copy",
+            self,
+            statusTip="Copy selected text",
+            triggered=self.copyText))
+
         menu.exec_(QtGui.QCursor.pos())
+
+    def copyText(self):
+        cursor = self.textCursor()
+        selection = cursor.selectedText()
+        clipboard.copy(selection)
 
     def action_bytecode_lookup(self):
         cursor = self.textCursor()
