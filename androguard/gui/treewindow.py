@@ -69,8 +69,6 @@ class TreeWindow(QtGui.QTreeWidget):
         androconf.debug("item %s has been double clicked at column %s" %
                         (str(item), str(column)))
         if item.childCount() != 0:
-            self.mainwin.showStatus("Sources not available. %s is not a class" %
-                                    path)
             return
 
         current_class, current_filename, current_digest = self._reverse_cache[
