@@ -9,362 +9,380 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1250</width>
-    <height>750</height>
+    <width>1280</width>
+    <height>800</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>1250</width>
-    <height>750</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>1250</width>
-    <height>750</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>ARES</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="loadedAPK_label">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>601</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>26</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>No APK Loaded</string>
-    </property>
-   </widget>
-   <widget class="QTabWidget" name="tabWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+     <horstretch>1</horstretch>
+     <verstretch>1</verstretch>
+    </sizepolicy>
+   </property>
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>9</x>
-      <y>39</y>
-      <width>1231</width>
-      <height>661</height>
+      <y>9</y>
+      <width>1261</width>
+      <height>741</height>
      </rect>
     </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <widget class="QWidget" name="tab_3">
-     <attribute name="title">
-      <string>APK</string>
-     </attribute>
-     <widget class="QGroupBox" name="groupBox_3">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>10</y>
-        <width>501</width>
-        <height>291</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Permissions</string>
-      </property>
-      <widget class="QTableWidget" name="permsTable">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>481</width>
-         <height>251</height>
-        </rect>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QLabel" name="loadedAPK_label">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
-       <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
-       </property>
-       <property name="showGrid">
-        <bool>true</bool>
-       </property>
-       <column>
-        <property name="text">
-         <string>Uses permissions</string>
-        </property>
-       </column>
-      </widget>
-     </widget>
-     <widget class="QGroupBox" name="groupBox_2">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>300</y>
-        <width>1191</width>
-        <height>321</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Log</string>
-      </property>
-      <widget class="QTextBrowser" name="logArea">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>1171</width>
-         <height>261</height>
-        </rect>
-       </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color:black;</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="clearLogBtn">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>290</y>
-         <width>110</width>
-         <height>32</height>
-        </rect>
+       <property name="font">
+        <font>
+         <pointsize>26</pointsize>
+        </font>
        </property>
        <property name="text">
-        <string>Clear</string>
+        <string>No APK Loaded</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="saveLogBtn">
-       <property name="geometry">
-        <rect>
-         <x>130</x>
-         <y>290</y>
-         <width>110</width>
-         <height>32</height>
-        </rect>
+     </item>
+     <item>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
-       <property name="text">
-        <string>Save ...</string>
+       <property name="currentIndex">
+        <number>0</number>
        </property>
-      </widget>
-     </widget>
-     <widget class="QGroupBox" name="groupBox_4">
-      <property name="geometry">
-       <rect>
-        <x>530</x>
-        <y>10</y>
-        <width>681</width>
-        <height>291</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Application Info</string>
-      </property>
-      <widget class="QTableWidget" name="appInfoTable">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>661</width>
-         <height>251</height>
-        </rect>
-       </property>
-       <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
-       </property>
-       <property name="selectionMode">
-        <enum>QAbstractItemView::SingleSelection</enum>
-       </property>
-       <property name="selectionBehavior">
-        <enum>QAbstractItemView::SelectRows</enum>
-       </property>
-       <column>
-        <property name="text">
-         <string>Application Variable</string>
+       <widget class="QWidget" name="tab_3">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Value</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Action</string>
-        </property>
-       </column>
-      </widget>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_4">
-     <attribute name="title">
-      <string>Sources</string>
-     </attribute>
-     <widget class="QGroupBox" name="groupBox">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>40</y>
-        <width>281</width>
-        <height>591</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Sources</string>
-      </property>
-      <widget class="QWidget" name="tree_area" native="true">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>251</width>
-         <height>551</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="sourceTextWidget" native="true">
-      <property name="geometry">
-       <rect>
-        <x>300</x>
-        <y>0</y>
-        <width>911</width>
-        <height>621</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QWidget" name="horizontalLayoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>0</y>
-        <width>294</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QPushButton" name="saveJavaSources">
-         <property name="text">
-          <string>Save ...</string>
+        <attribute name="title">
+         <string>APK</string>
+        </attribute>
+        <widget class="QWidget" name="verticalLayoutWidget_2">
+         <property name="geometry">
+          <rect>
+           <x>-1</x>
+           <y>0</y>
+           <width>1231</width>
+           <height>671</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QGroupBox" name="groupBox_2">
+            <property name="title">
+             <string>Log</string>
+            </property>
+            <widget class="QTextBrowser" name="logArea">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="geometry">
+              <rect>
+               <x>10</x>
+               <y>30</y>
+               <width>1211</width>
+               <height>261</height>
+              </rect>
+             </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color:black;</string>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="clearLogBtn">
+             <property name="geometry">
+              <rect>
+               <x>10</x>
+               <y>290</y>
+               <width>110</width>
+               <height>32</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Clear</string>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="saveLogBtn">
+             <property name="geometry">
+              <rect>
+               <x>130</x>
+               <y>290</y>
+               <width>110</width>
+               <height>32</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Save ...</string>
+             </property>
+            </widget>
+            <widget class="QWidget" name="horizontalLayoutWidget_2">
+             <property name="geometry">
+              <rect>
+               <x>9</x>
+               <y>319</y>
+               <width>1211</width>
+               <height>341</height>
+              </rect>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QGroupBox" name="groupBox_4">
+                <property name="title">
+                 <string>Application Info</string>
+                </property>
+                <widget class="QTableWidget" name="appInfoTable">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>30</y>
+                   <width>581</width>
+                   <height>301</height>
+                  </rect>
+                 </property>
+                 <property name="editTriggers">
+                  <set>QAbstractItemView::NoEditTriggers</set>
+                 </property>
+                 <property name="selectionMode">
+                  <enum>QAbstractItemView::SingleSelection</enum>
+                 </property>
+                 <property name="selectionBehavior">
+                  <enum>QAbstractItemView::SelectRows</enum>
+                 </property>
+                 <column>
+                  <property name="text">
+                   <string>Application Variable</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Value</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Action</string>
+                  </property>
+                 </column>
+                </widget>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="groupBox_3">
+                <property name="title">
+                 <string>Permissions</string>
+                </property>
+                <widget class="QTableWidget" name="permsTable">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>30</y>
+                   <width>581</width>
+                   <height>301</height>
+                  </rect>
+                 </property>
+                 <property name="editTriggers">
+                  <set>QAbstractItemView::NoEditTriggers</set>
+                 </property>
+                 <property name="showGrid">
+                  <bool>true</bool>
+                 </property>
+                 <column>
+                  <property name="text">
+                   <string>Uses permissions</string>
+                  </property>
+                 </column>
+                </widget>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_4">
+        <attribute name="title">
+         <string>Sources</string>
+        </attribute>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>40</y>
+           <width>281</width>
+           <height>591</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>Sources</string>
+         </property>
+         <widget class="QWidget" name="tree_area" native="true">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>251</width>
+            <height>551</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="sourceTextWidget" native="true">
+         <property name="geometry">
+          <rect>
+           <x>300</x>
+           <y>0</y>
+           <width>911</width>
+           <height>621</height>
+          </rect>
          </property>
         </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="showManifestBtn">
-         <property name="text">
-          <string>Manifest ...</string>
+        <widget class="QWidget" name="horizontalLayoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>294</width>
+           <height>41</height>
+          </rect>
          </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="saveJavaSources">
+            <property name="text">
+             <string>Save ...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="showManifestBtn">
+            <property name="text">
+             <string>Manifest ...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="showStringsBtn">
+            <property name="text">
+             <string>Strings ...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="showStringsBtn">
-         <property name="text">
-          <string>Strings ...</string>
+       </widget>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string>Resources</string>
+        </attribute>
+        <widget class="QGroupBox" name="groupBox_5">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>281</width>
+           <height>631</height>
+          </rect>
          </property>
+         <property name="title">
+          <string>Files from APK</string>
+         </property>
+         <widget class="QTableWidget" name="resourceFileTable">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>256</width>
+            <height>591</height>
+           </rect>
+          </property>
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOn</enum>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOn</enum>
+          </property>
+          <property name="autoScroll">
+           <bool>true</bool>
+          </property>
+          <column>
+           <property name="text">
+            <string>Filename</string>
+           </property>
+          </column>
+         </widget>
         </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab">
-     <attribute name="title">
-      <string>Resources</string>
-     </attribute>
-     <widget class="QGroupBox" name="groupBox_5">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>281</width>
-        <height>631</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Files from APK</string>
-      </property>
-      <widget class="QTableWidget" name="resourceFileTable">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>256</width>
-         <height>591</height>
-        </rect>
-       </property>
-       <property name="verticalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOn</enum>
-       </property>
-       <property name="horizontalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOn</enum>
-       </property>
-       <property name="autoScroll">
-        <bool>true</bool>
-       </property>
-       <column>
-        <property name="text">
-         <string>Filename</string>
-        </property>
-       </column>
+        <widget class="QGroupBox" name="groupBox_6">
+         <property name="geometry">
+          <rect>
+           <x>290</x>
+           <y>0</y>
+           <width>921</width>
+           <height>511</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>Viewer</string>
+         </property>
+         <widget class="QLabel" name="graphicview">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>901</width>
+            <height>461</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Graphic</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_7">
+         <property name="geometry">
+          <rect>
+           <x>290</x>
+           <y>500</y>
+           <width>921</width>
+           <height>121</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>File Info</string>
+         </property>
+         <widget class="QTextEdit" name="fileResourceInfo">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>901</width>
+            <height>78</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+       </widget>
       </widget>
-     </widget>
-     <widget class="QGroupBox" name="groupBox_6">
-      <property name="geometry">
-       <rect>
-        <x>290</x>
-        <y>0</y>
-        <width>921</width>
-        <height>511</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Viewer</string>
-      </property>
-      <widget class="QLabel" name="graphicview">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>901</width>
-         <height>461</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Graphic</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QGroupBox" name="groupBox_7">
-      <property name="geometry">
-       <rect>
-        <x>290</x>
-        <y>500</y>
-        <width>921</width>
-        <height>121</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>File Info</string>
-      </property>
-      <widget class="QTextEdit" name="fileResourceInfo">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>901</width>
-         <height>78</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
-    </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -372,7 +390,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1250</width>
+     <width>1280</width>
      <height>22</height>
     </rect>
    </property>
