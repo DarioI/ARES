@@ -209,6 +209,7 @@ class MainView(QtGui.QMainWindow):
         self.info["Uses Dynamic Code Loading"]   = str(analysis.is_dyn_code(self.x))
         self.info["Uses Reflection"]             = str(analysis.is_reflection_code(self.x))
         self.info["Uses Crypto"]                 = str(analysis.is_crypto_code(self.x))
+        self.info["Privacy Leaks"]               = str(len(self.get_privacy_leaks()))
         self.info["Number of Providers"]         = str(len(self.apk.get_providers()))
         self.info["Number of Activities"]        = str(len(self.apk.get_activities()))
         self.info["Number of Services"]          = str(len(self.apk.get_services()))
@@ -225,6 +226,7 @@ class MainView(QtGui.QMainWindow):
         self.info_actions["Uses Dynamic Code Loading"]   = self.show_dyncode
         self.info_actions["Uses Reflection"]             = self.show_reflection
         self.info_actions["Uses Crypto"]                 = self.show_cryptocode
+        self.info_actions["Privacy Leaks"]               = self.show_privacy_leaks
         self.info_actions["Number of Providers"]         = self.show_providers
         self.info_actions["Number of Activities"]        = self.show_activities
         self.info_actions["Number of Services"]          = self.show_services
@@ -330,7 +332,31 @@ class MainView(QtGui.QMainWindow):
             str_info_dyn += (self.show_Path(self.x.get_vm(), path )+"\n\n\t")
         self.__logger.log_with_title("Usage of Dynamic Code",str_info_dyn)
 
+    def get_privacy_leaks(self):
+        paths = []
+        paths.extend(self.x.get_tainted_packages().search_methods(".", "getDeviceId", "."))
+        paths.extend(self.x.get_tainted_packages().search_methods(".", "getSubscriberId", "."))
+        paths.extend(self.x.get_tainted_packages().search_methods(".", "getSimSerialNumber", "."))
+        paths.extend(self.x.get_tainted_packages().search_methods(".", "getLine1Number", "."))
+        paths.extend(self.x.get_tainted_packages().search_methods(".", "getAddress", "."))
+        paths.extend(self.x.get_tainted_packages().search_methods(".", "getMacAddress", "."))
+        paths.extend(self.x.get_tainted_packages().search_methods(".", "getSSID", "."))
+        paths.extend(self.x.get_tainted_packages().search_methods(".", "getCid", "."))
+        paths.extend(self.x.get_tainted_packages().search_methods(".", "getAccounts", "."))
+        paths.extend(self.x.get_tainted_packages().search_methods(".", "getTimeZone", "."))
+        paths.extend(self.x.get_tainted_packages().search_methods(".", "getAllBookmarks", "."))
+        paths.extend(self.x.get_tainted_packages().search_methods(".", "getAllVisitedUrls", "."))
+        return paths
 
+    def show_privacy_leaks(self):
+        paths = self.get_privacy_leaks()
+        if len(paths) == 0:
+            self.__logger.log(Logger.WARNING,"No privacy leaks were found!")
+            return
+        str_info_privacy="\t"
+        for path in paths:
+            str_info_privacy += (self.show_Path(self.x.get_vm(), path )+"\n\n\t")
+        self.__logger.log_with_title("Possible Privacy Leaks",str_info_privacy)
 
     def show_reflection(self):
         if analysis.is_reflection_code(self.x) is False:
