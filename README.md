@@ -9,6 +9,7 @@ ARES is a security suite for analyzing Android .apk files. Core analysis technol
 - Load .APK from system or dump from connected device
 - Android Permissions overview
 - Application information
+- Scan and show privacy leaks
 - Show usage of reflection code
 - Show usage of dynamic code update
 - Show usage of crypto code
