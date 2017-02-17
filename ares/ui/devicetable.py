@@ -14,13 +14,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import PySide
 
 __author__ = 'Dario Incalza'
 
 import os
 
-from PySide import QtGui, QtCore
+from PyQt4 import QtGui, QtCore
 
 from devicetable_ui import Ui_Form
 from ares.core.logger import Logger
@@ -106,7 +105,7 @@ class DeviceTable(QtGui.QDialog):
 class PackageWindow(QtGui.QDialog):
     def __init__(self,device, package_list, parent=None, win=None):
         super(PackageWindow, self).__init__(parent)
-        self.setWindowFlags(PySide.QtCore.Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.mainwin = win
         self.package_list = package_list
         self.device = device

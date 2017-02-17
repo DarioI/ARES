@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from PySide import QtGui,QtCore
+from PyQt4 import QtGui,QtCore
 from highlighter import ByteCodeHighlighter
 import clipboard
 from ares.core.constants import DEX_BYTECODE_SET

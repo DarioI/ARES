@@ -35,7 +35,7 @@ __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 # limitations under the License.
 
 __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
-from PySide import QtCore,QtGui
+from PyQt4 import QtCore,QtGui
 class XMLHighlighter(QtGui.QSyntaxHighlighter):
 
     def __init__(self, parent=None):

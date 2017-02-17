@@ -1,4 +1,4 @@
-from PySide import QtCore, QtGui
+from PyQt4 import QtCore, QtGui
 from androguard.core import androconf
 from androguard.gui.helpers import class2func, method2func, classdot2func, classdot2class, proto2methodprotofunc
 from androguard.gui.renamewindow import RenameDialog
@@ -11,8 +11,6 @@ try:
     from pygments.lexers import JavaLexer
 except:
     PYGMENTS = False
-
-import os
 
 BINDINGS_NAMES = [
     'NAME_PACKAGE', 'NAME_PROTOTYPE', 'NAME_SUPERCLASS', 'NAME_INTERFACE',
@@ -136,7 +134,7 @@ class SourceWindow(QtGui.QTextEdit):
         androconf.debug("Display bytecodes for %s" % self.current_class)
         self.mainwin.openBytecodeWindow(self.current_class)
 
-    @QtCore.Slot()
+    #@QtCore.Slot()
     def cursor_position_changed(self):
         '''Used to detect when cursor change position and to auto select word
            underneath it'''

@@ -19,7 +19,7 @@
 __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 
 import sys
-from PySide import QtGui
+from PyQt4 import QtGui
 from ares.core.mainview import MainView
 
 if __name__ == '__main__':

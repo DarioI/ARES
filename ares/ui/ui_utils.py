@@ -17,7 +17,7 @@
 
 __author__ = 'Dario Incalza'
 
-from PySide import QtCore,QtGui
+from PyQt4 import QtCore,QtGui
 
 class CustomTabBar(QtGui.QTabBar):
     '''Subclass QTabBar to implement middle-click closing of tabs'''

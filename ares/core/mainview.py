@@ -17,7 +17,7 @@
 
 __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 
-from PySide import QtGui, QtCore
+from PyQt4 import QtGui, QtCore
 
 import util,os
 from ares.ui.ui_utils import CustomTabBar
@@ -392,14 +392,12 @@ class MainView(QtGui.QMainWindow):
     def load_apk(self,path=None):
         if not path:
             path = QtGui.QFileDialog.getOpenFileName(self, "Open File",'', "APK Files (*.apk);;Androguard Session (*.ag)")
-            path = str(path[0])
         self.apk_path = path
-        if path:
-            self.set_loading_progressbar("Analyzing APK","Please wait while the APK is being dissected")
-            self.__logger.log(Logger.INFO,"Analyzing %s..." % str(path))
-            self.apk = apk.APK(path)
-            self.manifest = self.apk.get_AndroidManifest().getElementsByTagName("manifest")[0]
-            self.fileLoadingThread.load(path)
+        self.set_loading_progressbar("Analyzing APK","Please wait while the APK is being dissected")
+        self.__logger.log(Logger.INFO,"Analyzing %s..." % str(path))
+        self.apk = apk.APK(self.apk_path)
+        self.manifest = self.apk.get_AndroidManifest().getElementsByTagName("manifest")[0]
+        self.fileLoadingThread.load(str(path))
 
     def load_permissions(self):
         perms = self.get_uses_permissions()

@@ -25,8 +25,8 @@ messages.
 
 from datetime import datetime
 
-from PySide.QtGui import QColor
-from PySide import QtGui
+from PyQt4.QtGui import QColor
+from PyQt4 import QtGui
 
 
 class Logger(object):

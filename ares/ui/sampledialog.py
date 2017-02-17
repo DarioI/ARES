@@ -17,8 +17,8 @@
 
 __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 
-from PySide import QtGui
-from PySide.QtGui import QMessageBox,QDialog
+from PyQt4 import QtGui
+from PyQt4.QtGui import QMessageBox,QDialog
 from question_dialog import Ui_startDialog
 from dumpey import dumpey
 import traceback,sys

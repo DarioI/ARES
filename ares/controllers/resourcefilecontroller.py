@@ -17,8 +17,8 @@
 
 __author__ = 'Dario Incalza <dario.incalza@gmail.com>'
 
-from PySide.QtGui import QTableWidgetItem
-from PySide import QtGui,QtCore
+from PyQt4.QtGui import QTableWidgetItem
+from PyQt4 import QtGui,QtCore
 
 
 class ResourceFileController(object):

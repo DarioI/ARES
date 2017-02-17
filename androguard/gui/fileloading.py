@@ -1,9 +1,7 @@
-from androguard.core import androconf
-from PySide import QtCore
+from PyQt4 import QtCore
 
 from androguard.misc import *
 
-import os.path
 import traceback
 
 

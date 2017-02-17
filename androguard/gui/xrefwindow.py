@@ -1,4 +1,4 @@
-from PySide import QtCore, QtGui
+from PyQt4 import QtCore, QtGui
 from androguard.core import androconf
 from androguard.gui.helpers import display2classmethod, class2func, classmethod2display, method2func
 

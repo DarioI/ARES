@@ -1,4 +1,4 @@
-from PySide import QtCore, QtGui
+from PyQt4 import QtCore, QtGui
 from androguard.gui.xrefwindow import XrefDialogString
 
 
